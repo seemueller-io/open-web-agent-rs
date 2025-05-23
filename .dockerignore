@@ -1,0 +1,10 @@
+*
+!packages/genaiscript/genaisrc
+!src
+!Cargo.lock
+!Cargo.toml
+!package.json
+!package-lock.json
+!assets
+!bun.lockb
+!packages

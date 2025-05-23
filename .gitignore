@@ -1,0 +1,12 @@
+/target
+/node_modules/
+/.idea
+prompt.md
+todo
+chrome
+stream_store
+data/
+web-agent-rs/
+./.env*
+/.genaiscript/
+/packages/genaiscript/node_modules/

@@ -1,0 +1,32 @@
+services:
+  agent-server:
+    build:
+      context: .
+      dockerfile: Local.Dockerfile
+    ports:
+      - "3006:3006"
+    environment:
+      # Load environment variables from the .env file
+      # The .env file should contain OPENAI_API_KEY, BING_SEARCH_API_KEY, TAVILY_API_KEY, etc.
+      - OPENAI_API_BASE=${OPENAI_API_BASE}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GENAISCRIPT_MODEL_LARGE=${GENAISCRIPT_MODEL_LARGE}
+      - GENAISCRIPT_MODEL_SMALL=${GENAISCRIPT_MODEL_SMALL}
+      - BING_SEARCH_API_KEY=${BING_SEARCH_API_KEY}
+      - BING_SEARCH_API_KEY=${BING_SEARCH_API_KEY}
+      - TAVILY_API_KEY=${TAVILY_API_KEY}
+      - PERIGON_API_KEY=${PERIGON_API_KEY}
+      - SEARXNG_API_BASE_URL=${SEARXNG_API_BASE_URL}
+      - PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium-browser
+    env_file: "./.env"
+    develop:
+      watch:
+        - action: sync
+          path: ./packages/genaiscript/genaisrc
+          target: /app/web/packages/genaiscript/genaisrc
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./src
+        - action: rebuild
+          path: cargo.toml
