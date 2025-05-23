@@ -2,6 +2,7 @@
 name = "web-agent-rs"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
 
 [[bin]]
 edition = "2021"
@@ -30,4 +31,3 @@ tower-http = { version = "0.6.2", features = ["trace"] }
 anyhow = "1.0.97"
 base64 = "0.22.1"
 fips204 = "0.4.6"
-
