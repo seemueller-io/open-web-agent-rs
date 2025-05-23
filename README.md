@@ -1,6 +1,6 @@
 # web-agent-rs
 Remote genaiscript host for integration into conversational AI applications.
-> This project is actively being developed to suit more use-cases, expect breaking changes.
+> This application is actively being ported, expect breaking changes.
 
 ### Disclaimer
 This has not undergone a formal security assessment. You should do your own evaluation before using this.
@@ -118,3 +118,60 @@ If your agent requires specific API keys or configuration, add them to the `Shim
 ## License
 
 This project is licensed under the [MIT License](LICENSE)
+
+
+Development History (Nov 2024 – May 2025)
+---
+
+#### May 2025
+
+* **Sanitize codebase and cleanup** *(2025-05-23)*
+
+#### April 2025
+
+* **Replace Perigon integration with SearxNG** *(2025-04-16)*
+* **Enable authentication for SearxNG search** *(2025-04-04)*
+* **Temporarily remove SearxNG password** *(2025-04-04)*
+* **Deploy SearxNG search functionality** *(2025-04-01)*
+
+#### March 2025
+
+* **Deploy updated search functionality using SearxNG** *(2025-03-31)*
+* **Resolve dependency issues and update Docker configuration** *(2025-03-31)*
+* **Implement cryptocurrency market data fetching and quoting functionality** *(2025-03-20)*
+* **Update AI model configuration** *(2025-03-20)*
+* **Fix model provider issue** *(2025-03-18)*
+* **Deploy configuration with auto-scaling capabilities (scales to zero)** *(2025-03-17)*
+
+#### February 2025
+
+* **Add image generation endpoint** *(2025-02-05)*
+
+#### January 2025
+
+* **Containerize application with Docker and deploy successfully** *(2025-01-27)*
+* **Implement request call-count tracking and integrate tracing (tower-http)** *(2025-01-21)*
+* **Disable caching mechanism** *(2025-01-16)*
+* **Update deployment configuration to use GPT-4o-mini model** *(2025-01-15)*
+* **Switch AI model provider back to OpenAI** *(2025-01-14)*
+
+#### December 2024
+
+* **Refactor database handling and web scraping logic** *(2024-12-30)*
+* **Implement robust error handling and retry logic for webhooks** *(2024-12-29)*
+* **Add sled database for persistent webhook handling** *(2024-12-28)*
+* **Enhance scraping modules and build configurations** *(2024-12-28)*
+* **Finalize URL reader implementation** *(2024-12-27)*
+* **Upgrade news fetching mechanism and set specific search query provider** *(2024-12-21, 2024-12-18)*
+* **Improve news search functionality (date filtering, formatting, error handling)** *(2024-12-16 to 2024-12-18)*
+* **Add Perigon integration for news search** *(2024-12-16)*
+* **Enhance VM resources and refine search result formatting** *(2024-12-16)*
+* **Add stream activity tracking with reconnection handling** *(2024-12-15)*
+* **Simplify AI search scripts and improve dependency management** *(2024-12-10)*
+* **Update API keys and model configurations for better search reliability** *(2024-12-07, 2024-12-02)*
+
+#### November 2024
+
+* **Refactor project structure, enhance logging, and initial UI responses** *(2024-11-28)*
+---
+Note: Original commit history may be available by request.
