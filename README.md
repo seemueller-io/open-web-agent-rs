@@ -1,4 +1,4 @@
-# web-agent-rs
+# open-web-agent-rs
 Remote genaiscript host for integration into conversational AI applications.
 > This application is actively being ported, expect breaking changes.
 
