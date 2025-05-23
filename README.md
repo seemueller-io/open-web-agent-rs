@@ -2,13 +2,31 @@
 Remote genaiscript host for integration into conversational AI applications.
 > This project is actively being developed to suit more use-cases, expect breaking changes.
 
+### Disclaimer
+This has not undergone a formal security assessment. You should do your own evaluation before using this.
+
+
+### Features not included in this fork
+- Capabilities API: Reports available agents via HTTP (useful for dynamic intent mapping)
+
+### Planned Features
+- Embed Model Context Protocol for client connectivity
+
+## Documentation
+
+Comprehensive documentation is available in the [docs](./docs) directory:
+
+- [Installation Guide](./docs/installation.md) - How to install and set up the project
+- [Configuration Guide](./docs/configuration.md) - Environment variables and configuration options
+- [API Documentation](./docs/api.md) - API endpoints and usage examples
+- [Authentication](./docs/tokens.md) - Authentication system documentation
+- [Agents Guide](./docs/agents.md) - How to create and use agents
+- [Input Documentation](./docs/input.md) - How input works for agents
+- [Stream Data Format](./docs/streams.md) - How stream data is formatted for clients
+
 
 ### Setup
 See [Installation](./docs/installation.md)
-
-
-### Disclaimer
-This has not undergone a formal security assessment. You should do your own evaluation before using this.
 
 ### How it works
 1. A chat client specifies the URL to this host in their environment.
@@ -90,26 +108,12 @@ let cmd = match resource.as_str() {
 
 If your agent requires specific API keys or configuration, add them to the `ShimBinding` struct in `src/utils/utils.rs`.
 
-## Existing Agents
 
-The project currently includes the following agents:
-
-- **Web Search**: Performs web searches using SearxNG
-- **News Search**: Searches for news articles
-- **Image Generator**: Generates images based on text prompts
-- **Finance Query**: Provides financial information
-- **Web Scrape**: Scrapes content from web pages
-
-## Documentation
-
-Comprehensive documentation is available in the [docs](./docs) directory:
-
-- [Installation Guide](./docs/installation.md) - How to install and set up the project
-- [Configuration Guide](./docs/configuration.md) - Environment variables and configuration options
-- [API Documentation](./docs/api.md) - API endpoints and usage examples
-- [Authentication](./docs/tokens.md) - Authentication system documentation
-- [Agents Guide](./docs/agents.md) - How to create and use agents
-- [Input Documentation](./docs/input.md) - How input works for agents
+### Fast Agent Development Workflow
+1. Create script: create a new genaiscript script in `packages/genaiscript/genaisrc`
+2. Setup a development executor: Map a package script in `package.json` to the script in step 1 following the existing examples
+3. Iterate until agent is functional.
+4. Follow the guide on adding a new agent to integrate it into the rust server.
 
 ## License
 
