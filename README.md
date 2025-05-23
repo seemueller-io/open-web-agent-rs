@@ -3,6 +3,9 @@ Remote genaiscript host for integration into conversational AI applications.
 > This project is actively being developed to suit more use-cases, expect breaking changes.
 
 
+### Setup
+See [Installation](./docs/installation.md)
+
 
 ### Disclaimer
 This has not undergone a formal security assessment. You should do your own evaluation before using this.
@@ -109,4 +112,4 @@ Comprehensive documentation is available in the [docs](./docs) directory:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the [MIT License](LICENSE)
