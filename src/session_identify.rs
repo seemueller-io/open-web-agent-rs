@@ -14,6 +14,8 @@ pub struct SessionIdentity {
     pub user: Value
 }
 
+// for a production setup, use a 3rd party host to verify the signature
+// I removed in this version because the identity server I built is not open source yet
 pub async fn session_identify(session_token: &str) -> Result<SessionIdentity> {
     let session_data_base64 = session_token.split('.').nth(0).ok_or_else(|| anyhow::anyhow!("Invalid session data format"))?;
     // println!("session_data_base64: {}", session_data_base64);

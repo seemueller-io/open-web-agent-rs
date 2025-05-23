@@ -17,7 +17,7 @@ async fn main() {
     // Initialize logging
     init_logging();
 
-    // Load configuration
+    // init server configuration
     let config = AppConfig::new();
 
     // Create router with all routes
