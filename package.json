@@ -1,0 +1,20 @@
+{
+  "name": "web-agent-rs",
+  "type": "module",
+  "workspaces": ["packages/*"],
+  "private": true,
+  "scripts": {
+    "dev": "bunx kill-port 3006 && bun run build && cargo watch -x 'run src/main.rs'",
+    "ai:search": "genaiscript run packages/genaiscript/genaisrc/web-search.genai.mts --vars USER_INPUT='who won the 2024 election?'",
+    "shim:ai:search": "pnpm build && ./dist/shim.js --file=genaisrc/search.genai.mts USER_INPUT=\"Who won the 2024 presidential election?\"\n",
+    "ai:news": "genaiscript run packages/genaiscript/genaisrc/news-search.genai.mts --vars USER_INPUT='What are the latest updates and developments in the Ukraine war?'",
+    "ai:url:read": "genaiscript run packages/genaiscript/genaisrc/web-scrape.genai.mts --vars USER_INPUT='{\"url\":\"https://geoff.seemueller.io/about\",\"query\":\"Describe the details of the page.\", \"action\": \"read\"}'",
+    "ai:url:scrape": "npx genaiscript run packages/genaiscript/genaisrc/web-scrape.genai.mts --vars USER_INPUT='{\"url\":\"https://www.time4learning.com/homeschool-curriculum/high-school/eleventh-grade/math.html\",\"query\":\"What is on this page?\", \"action\": \"scrape\"}'",
+    "crypto:quote": "npx genaiscript run packages/genaiscript/genaisrc/finance-query.genai.mts --vars USER_INPUT='Get a quote for BTC'",
+    "crypto:news": "npx genaiscript run packages/genaiscript/genaisrc/finance-query.genai.mts --vars USER_INPUT='What is the news for Bitcoin?'",
+    "crypto:overview": "npx genaiscript run packages/genaiscript/genaisrc/finance-query.genai.mts --vars USER_INPUT='What are the trending symbols in the market?'",
+    "compose:up": "docker compose up --build",
+    "prod:logs": "fly logs",
+    "build": "(cd packages/genaiscript-rust-shim && bun run buildShim)"
+  }
+}

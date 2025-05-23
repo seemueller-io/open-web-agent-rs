@@ -1,0 +1,1629 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "News & Stories",
+    "version": "unknown"
+  },
+  "servers": [
+    {
+      "url": "https://api.goperigon.com"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "sec0": {
+        "type": "apiKey",
+        "in": "query",
+        "name": "apiKey",
+        "x-default": ""
+      }
+    }
+  },
+  "security": [
+    {
+      "sec0": []
+    }
+  ],
+  "paths": {
+    "/v1/all": {
+      "get": {
+        "summary": "All Articles",
+        "description": "Search and filter all news articles available via the Perigon API. The result includes a list of individual articles that were matched to your specific criteria.",
+        "operationId": "all-news",
+        "parameters": [
+          {
+            "name": "apiKey",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Search query, each article will be scored and ranked against it. Articles are searched on the title, description, and content fields.  <a href=\"/docs/search-concepts\">More ➜</a>",
+            "schema": {
+              "type": "string",
+              "default": "recall OR \"safety concern*\""
+            }
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "description": "Search article headlines/title field. Semantic similar to q parameter.",
+            "schema": {
+              "type": "string",
+              "default": "tesla OR TSLA OR \"General Motors\" OR GM"
+            }
+          },
+          {
+            "name": "desc",
+            "in": "query",
+            "description": "Search query on the description field. Semantic similar to q parameter.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "content",
+            "in": "query",
+            "description": "Search query on the article's body of content field. Semantic similar to q parameter.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "url",
+            "in": "query",
+            "description": "Search query on the url field. Semantic similar to q parameter. E.g. could be used for querying certain website sections, e.g. source=cnn.com&url=travel.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "articleId",
+            "in": "query",
+            "description": "Article ID will search for a news article by the ID of the article. If several parameters are passed, all matched articles will be returned.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clusterId",
+            "in": "query",
+            "description": "Search for related content using a cluster ID. Passing a cluster ID will filter results to only the content found within the cluster.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "'from' filter, will search articles published after the specified date, the date could be passed as ISO or 'yyyy-mm-dd'. Add time in ISO format, ie. 2023-03-01T00:00:00",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "'to' filter, will search articles published before the specified date, the date could be passed as ISO or 'yyyy-mm-dd'. Add time in ISO format, ie. 2022-02-01T23:59:59",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "addDateFrom",
+            "in": "query",
+            "description": "'addDateFrom' filter, will search articles added after the specified date, the date could be passed as ISO or 'yyyy-mm-dd'. Add time in ISO format, ie. 2022-02-01T00:00:00",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "addDateTo",
+            "in": "query",
+            "description": "'addDateTo' filter, will search articles added before the specified date, the date could be passed as ISO or 'yyyy-mm-dd'. Add time in ISO format, ie. 2022-02-01T23:59:59",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "refreshDateFrom",
+            "in": "query",
+            "description": "Will search articles that were refreshed after the specified date. The date could be passed as ISO or 'yyyy-mm-dd'.  Add time in ISO format, ie. 2022-02-01T00:00:00",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "refreshDateTo",
+            "in": "query",
+            "description": "Will search articles that were refreshed before the specified date. The date could be passed as ISO or 'yyyy-mm-dd'. Add time in ISO format, ie. 2022-02-01T23:59:59",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "medium",
+            "in": "query",
+            "description": "Medium will filter out news articles medium, which could be 'Video' or 'Article'. If several parameters are passed, all matched articles will be returned.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Article",
+                "Video"
+              ]
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "description": "Publisher's domain can include a subdomain. If multiple parameters are passed, they will be applied as OR operations. Wildcards (\\* and ?) are suported (e.g. \\*.cnn.com). <a href=\"/docs/sources-source-groups\">More ➜</a>",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceGroup",
+            "in": "query",
+            "description": "One of the supported source groups. Find Source Groups in the guided part of our documentation... <a href=\"/docs/sources-source-groups\">More ➜</a>",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "top10",
+                "top100",
+                "top25crypto",
+                "top25finance",
+                "top50tech",
+                "top100sports",
+                "top100leftUS",
+                "top100rightUS",
+                "top100centerUS"
+              ]
+            }
+          },
+          {
+            "name": "excludeSource",
+            "in": "query",
+            "description": "The domain of the website, which should be excluded from the search. Multiple parameters could be provided. Wildcards (\\* and ?) are suported (e.g. \\*.cnn.com).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "paywall",
+            "in": "query",
+            "description": "Filter to show only results where the source has a paywall (true) or does not have a paywall (false).",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "byline",
+            "in": "query",
+            "description": "Author names to filter by. Article author bylines are used as a source field. If multiple parameters are passed, they will be applied as OR operations.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "journalistId",
+            "in": "query",
+            "description": "Filter by journalist ID. Journalist IDs are unique journalist identifiers which can be found through the Journalist API, or in the matchedAuthors field.  <a href=\"/docs/journalist-data\">More ➜</a>",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Language code to filter by language. If multiple parameters are passed, they will be applied as OR operations. <a href=\"/docs/countries-languages\">More ➜</a>",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "da",
+                "de",
+                "en",
+                "es",
+                "fi",
+                "fr",
+                "hu",
+                "it",
+                "nl",
+                "no",
+                "pl",
+                "pt",
+                "ru",
+                "sv",
+                "uk"
+              ]
+            }
+          },
+          {
+            "name": "searchTranslation",
+            "in": "query",
+            "description": "Expand a query to search the translation, translatedTitle, and translatedDescription fields for non-English articles.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "label",
+            "in": "query",
+            "description": "Labels to filter by, could be 'Opinion', 'Paid-news', 'Non-news', etc. If multiple parameters are passed, they will be applied as OR operations.  <a href=\"/docs/article-types-labels#labels\">More ➜</a>",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Opinion",
+                "Non-news",
+                "Paid News",
+                "Fact Check",
+                "Pop Culture",
+                "Roundup",
+                "Press Release",
+                "Low Content"
+              ]
+            }
+          },
+          {
+            "name": "excludeLabel",
+            "in": "query",
+            "description": "Exclude results that include specific labels (Opinion, Non-news, Paid News, etc.). You can filter multiple by repeating the parameter.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Opinion",
+                "Non-news",
+                "Paid News",
+                "Fact Check",
+                "Pop Culture",
+                "Roundup",
+                "Press Release",
+                "Low Content"
+              ]
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Filter by categories. Categories are general themes that the article is about. Examples of categories: Tech, Politics, etc. If multiple parameters are passed, they will be applied as OR operations. Use 'none' to search uncategorized articles. <a href=\"/docs/topics-categories#categories\">More ➜</a>",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Politics",
+                "Tech",
+                "Sports",
+                "Business",
+                "Finance",
+                "Entertainment",
+                "Health",
+                "Weather",
+                "Lifestyle",
+                "Auto",
+                "Science",
+                "Travel",
+                "Environment",
+                "World",
+                "General",
+                "none"
+              ]
+            }
+          },
+          {
+            "name": "topic",
+            "in": "query",
+            "description": "Filter by topics. Each topic is some kind of entity that the article is about. Examples of topics: Markets, Joe Biden, Green Energy, Climate Change, Cryptocurrency, etc. If multiple parameters are passed, they will be applied as OR operations. <a href=\"/docs/topics-categories#topics\">More ➜</a>",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "excludeTopic",
+            "in": "query",
+            "description": "Filter by excluding topics. Each topic is some kind of entity that the article is about. Examples of topics: Markets, Joe Biden, Green Energy, Climate Change, Cryptocurrency, etc. If multiple parameters are passed, they will be applied as OR operations. <a href=\"/docs/topics-categories#topics\">More ➜</a>",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "linkTo",
+            "in": "query",
+            "description": "Returns only articles that point to specified links (as determined by the 'links' field in the article response).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "showReprints",
+            "in": "query",
+            "description": "Whether to return reprints in the response or not. Reprints are usually wired articles from sources like AP or Reuters that are reprinted in multiple sources at the same time. By default, this parameter is 'true'.",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "reprintGroupId",
+            "in": "query",
+            "description": "Shows all articles belonging to the same reprint group. A reprint group includes one original article (the first one processed by the API) and all its known reprints.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "description": "Filters articles where a specified city plays a central role in the content, beyond mere mentions, to ensure the results are deeply relevant to the urban area in question. If multiple parameters are passed, they will be applied as OR operations.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "area",
+            "in": "query",
+            "description": "Filters articles where a specified area, such as a neighborhood, borough, or district, plays a central role in the content, beyond mere mentions, to ensure the results are deeply relevant to the area in question. If multiple parameters are passed, they will be applied as OR operations.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Filters articles where a specified state plays a central role in the content, beyond mere mentions, to ensure the results are deeply relevant to the state in question. If multiple parameters are passed, they will be applied as OR operations.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "locationsCountry",
+            "in": "query",
+            "description": "Filters articles where a specified country plays a central role in the content, beyond mere mentions, to ensure the results are deeply relevant to the country in question. If multiple parameters are passed, they will be applied as OR operations.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "excludeLocationsCountry",
+            "in": "query",
+            "description": "Excludes articles where a specified country plays a central role in the content, ensuring results are not deeply relevant to the country in question. If multiple parameters are passed, they will be applied as AND operations, excluding articles relevant to any of the specified countries.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location",
+            "in": "query",
+            "description": "Return all articles that have the specified location. Location attributes are delimited by ':' between key and value, and '::' between attributes. Example: 'city:New York::state:NY'.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lat",
+            "in": "query",
+            "description": "Latitude of the center point to search places",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "lon",
+            "in": "query",
+            "description": "Longitude of the center point to search places",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "maxDistance",
+            "in": "query",
+            "description": "Maximum distance (in km) from starting point to search articles by tagged places",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sourceCity",
+            "in": "query",
+            "description": "Find articles published by sources that are located within a given city.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceCounty",
+            "in": "query",
+            "description": "Find articles published by sources that are located within a given county.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceCountry",
+            "in": "query",
+            "description": "Find articles published by sources that are located within a given country.  Must be 2 character country code  (i.e. us, gb, etc).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "description": "Country code to filter by country. If multiple parameters are passed, they will be applied as OR operations.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "us",
+                "gb",
+                "de",
+                "it",
+                "fr",
+                "nl",
+                "se",
+                "dk",
+                "fi",
+                "hu",
+                "no",
+                "pl",
+                "pt",
+                "ru",
+                "ua",
+                "ch",
+                "br",
+                "nz",
+                "mx",
+                "au"
+              ]
+            }
+          },
+          {
+            "name": "sourceState",
+            "in": "query",
+            "description": "Find articles published by sources that are located within a given state.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceLon",
+            "in": "query",
+            "description": "Latitude of the center point to search articles created by local publications.",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "sourceLat",
+            "in": "query",
+            "description": "Latitude of the center point to search articles created by local publications.",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "sourceMaxDistance",
+            "in": "query",
+            "description": "Maximum distance from starting point to search articles created by local publications.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "personWikidataId",
+            "in": "query",
+            "description": "List of person Wikidata IDs for filtering.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "personName",
+            "in": "query",
+            "description": "List of person names for exact matches. Boolean and complex logic is not supported on this paramter.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "List of company IDs to filter by.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "companyName",
+            "in": "query",
+            "description": "Search by company name.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "companyDomain",
+            "in": "query",
+            "description": "Search by company domains for filtering. E.g. companyDomain=apple.com.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "companySymbol",
+            "in": "query",
+            "description": "Search by company symbols.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page number. From 0 to 10000. See the Pagination section for limitations.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Number of articles returned per page, from 0 to 100.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "'relevance' to sort by relevance to the query, 'date' to sort by the publication date (desc), 'pubDate' is a synonym to 'date', 'addDate' to sort by 'addDate' field (desc), 'refreshDate' to sort by 'refreshDate' field (desc).",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "date",
+                "relevance",
+                "addDate",
+                "pubDate",
+                "refreshDate"
+              ],
+              "default": "relevance"
+            }
+          },
+          {
+            "name": "showNumResults",
+            "in": "query",
+            "description": "Whether to show the total number of all matched articles. Default value is false which makes queries a bit more efficient but also counts up to 10000 articles.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "positiveSentimentFrom",
+            "in": "query",
+            "description": "Filters results with a sentiment score greater than or equal to the specified value, indicating positive sentiment. See the Article Data section in Docs for an explanation of scores.",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "positiveSentimentTo",
+            "in": "query",
+            "description": "Filters results with a sentiment score less than or equal to the specified value, indicating positive sentiment. See the Article Data section in Docs for an explanation of scores.",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "neutralSentimentFrom",
+            "in": "query",
+            "description": "Filters results with a sentiment score greater than or equal to the specified value, indicating neutral sentiment. Explanation of sentimental values can be found in Docs under the Article Data section.",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "neutralSentimentTo",
+            "in": "query",
+            "description": "Filters results with a sentiment score less than or equal to the specified value, indicating neutral sentiment. See the Article Data section in Docs for an explanation of scores.",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "negativeSentimentFrom",
+            "in": "query",
+            "description": "Filters results with a sentiment score greater than or equal to the specified value, indicating negative sentiment. See the Article Data section in Docs for an explanation of scores.",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "negativeSentimentTo",
+            "in": "query",
+            "description": "Filters results with a sentiment score less than or equal to the specified value, indicating negative sentiment. See the Article Data section in Docs for an explanation of scores.",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "taxonomy",
+            "in": "query",
+            "description": "Filters by Google Content Categories. This field will accept 1 or more categories, must pass the full name of the category. Example: taxonomy=/Finance/Banking/Other, /Finance/Investing/Funds",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "prefixTaxonomy",
+            "in": "query",
+            "description": "Filters by Google Content Categories. This field will filter by the category prefix only. Example: prefixTaxonomy=/Finance",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"status\": 200,\n    \"numResults\": 1,\n    \"articles\": [\n        {\n            \"url\": \"https://decrypt.co/301053/nft-market-hits-three-year-low-in-trading-and-sales-report\",\n            \"authorsByline\": \"Vismaya V\",\n            \"articleId\": \"680d7893185c4357a9047332cf38206c\",\n            \"clusterId\": \"37426b0543cb45e3a547695fd63e9919\",\n            \"source\": {\n                \"domain\": \"decrypt.co\",\n                \"paywall\": false,\n                \"location\": {\n                    \"country\": \"us\",\n                    \"state\": \"NY\",\n                    \"city\": \"New York\",\n                    \"coordinates\": {\n                        \"lat\": 40.7127281,\n                        \"lon\": -74.0060152\n                    }\n                }\n            },\n            \"imageUrl\": \"https://cdn.decrypt.co/resize/1024/height/512/wp-content/uploads/2021/07/The-Bored-Ape-Yacht-Club-gID_7.jpeg\",\n            \"country\": \"us\",\n            \"language\": \"en\",\n            \"pubDate\": \"2025-01-15T09:20:34+00:00\",\n            \"addDate\": \"2025-01-15T09:27:57.156032+00:00\",\n            \"refreshDate\": \"2025-01-15T09:27:57.156034+00:00\",\n            \"score\": 52.79721,\n            \"title\": \"NFT Market Hits Three-Year Low in Trading and Sales: Report\",\n            \"description\": \"Annual NFT trading volumes fell by 19%, while sales counts dipped by 18% compared to 2023, according to DappRadar.\",\n            \"content\": \"The NFT market suffered a dismal 2024, with trading volumes and sales counts dropping to their weakest levels since 2020.\\n\\nAnnual trading volumes fell by 19%, while sales counts dipped by 18% compared to 2023, according to a report by blockchain analytics platform.\\n\\nDespite a surge in crypto market activity, driven by Bitcoin’s all-time highs and booming DeFi growth, NFTs appeared to struggle under the weight of their own inflated valuations.\\n\\nEarly in the year, NFT trading volumes reached $5.3 billion in Q1, a modest 4% increase compared to the same period in 2023.\\n\\nHowever, this momentum proved fleeting, as volumes plummeted to $1.5 billion in Q3 before recovering slightly to $2.6 billion in Q4.\\n\\nEven with these fluctuations, annual sales counts fell sharply, pointing to a broader trend: while individual NFTs became more expensive in line with rising crypto token prices, overall market engagement dwindled.\\n\\nYuga Labs’ flagship collections Bored Ape Yacht Club (BAYC) and Mutant Ape Yacht Club (MAYC) hit historic lows, with floor prices dropping to 15 ETH and 2.4 ETH, respectively.\\n\\nEven Otherdeeds for Yuga Labs' Otherside metaverse plummeted to 0.23 ETH, a far cry from their initial minting price, exposing cracks in Yuga’s high-priced, membership-driven model.\\n\\nThis coincided with DappRadar’s observation that “Perhaps 2024 helped us realize that NFTs don’t need to be expensive to prove their importance in the broader Web3 ecosystem,” a critique of the market’s reliance on exclusivity and inflated pricing.\\n\\nAmid this downturn, the NFT market witnessed a paradox in November when CryptoPunk #8348, a rare seven-trait collectible from the NFT collection, was collateralized for a $2.75 million loan via the NFT lending platform GONDI.\\n\\nTouted as a milestone for NFTs as financial assets, this event showed speculative excess when juxtaposed with DappRadar’s insights about affordability and utility.\\n\\nWhile high-profile transactions like this aim to affirm NFTs’ value, they also highlight a market still driven by exclusivity and inflated pricing, even as wider participation wanes.\\n\\nEven within the struggling sector, blue-chip collections like CryptoPunks defied trends, nearly doubling in USD value in 2024 with notable sales driving brief recovery periods.\\n\\nNFT platforms like Blur dominated marketplace activity, leveraging zero-fee trading and aggressive airdrop campaigns to capture the largest share of trading volumes.\\n\\nIn contrast, rival marketplace OpenSea struggled with regulatory headwinds and declining market sentiment, forcing significant layoffs by year-end.\\n\\nBy Q4, Blur and OpenSea were neck-and-neck in market share, but Blur’s ability to generate high activity from a smaller, more active user base gave it the edge, as per the report.\\n\\nWhile trading volumes in late 2024 hinted at a potential recovery—November sales hit $562 million, the highest since May—the overall trajectory suggests that affordability, accessibility, and utility will be critical for sustained growth in 2025.\",\n            \"medium\": \"Article\",\n            \"links\": [\n                \"https://dappradar.com/blog/dapp-industry-report-2024-overview\",\n                \"https://decrypt.co/resources/what-is-the-metaverse-immersive-nft-virtual-world\",\n                \"https://decrypt.co/resources/non-fungible-tokens-nfts-explained-guide-learn-blockchain\",\n                \"https://decrypt.co/247932/sec-coming-after-opensea-nfts-could-be-in-trouble\",\n                \"https://share.flipboard.com/bookmarklet/popout?v=2&url=https://decrypt.co/301053/nft-market-hits-three-year-low-in-trading-and-sales-report\",\n                \"https://decrypt.co/resources/what-are-cryptopunks-ethereum-nft-avatars\",\n                \"https://decrypt.co/291710/cryptopunk-prices-surge-bitcoin-gains\",\n                \"https://decrypt.co/scene\",\n                \"https://decrypt.co/resources/what-is-bored-ape-yacht-club-the-celebrity-nft-of-choice\",\n                \"https://decrypt.co/247930/if-you-bought-bored-ape-nfts-at-the-peak-youve-lost-93-of-your-investment\",\n                \"https://decrypt.co/293754/someone-just-took-out-a-2-75-million-loan-against-this-one-of-one-cryptopunk-nft\"\n            ],\n            \"labels\": [\n                {\n                    \"name\": \"Roundup\"\n                }\n            ],\n            \"matchedAuthors\": [\n                {\n                    \"id\": null,\n                    \"name\": \"Vismaya V\"\n                }\n            ],\n            \"claim\": \"\",\n            \"verdict\": \"\",\n            \"keywords\": [\n                {\n                    \"name\": \"NFT trading volumes\",\n                    \"weight\": 0.095650345\n                },\n                {\n                    \"name\": \"NFT Market\",\n                    \"weight\": 0.09479949\n                },\n                {\n                    \"name\": \"crypto market activity\",\n                    \"weight\": 0.09068515\n                },\n                {\n                    \"name\": \"Annual trading volumes\",\n                    \"weight\": 0.08782178\n                },\n                {\n                    \"name\": \"trading volumes\",\n                    \"weight\": 0.087688774\n                },\n                {\n                    \"name\": \"market share\",\n                    \"weight\": 0.08508381\n                },\n                {\n                    \"name\": \"overall market engagement\",\n                    \"weight\": 0.08292204\n                },\n                {\n                    \"name\": \"declining market sentiment\",\n                    \"weight\": 0.080258906\n                },\n                {\n                    \"name\": \"annual sales counts\",\n                    \"weight\": 0.07653589\n                },\n                {\n                    \"name\": \"sales counts\",\n                    \"weight\": 0.07410056\n                }\n            ],\n            \"topics\": [],\n            \"categories\": [],\n            \"taxonomies\": [\n                {\n                    \"name\": \"/Finance/Investing/Currencies & Foreign Exchange\"\n                },\n                {\n                    \"name\": \"/News/Business News/Financial Markets News\"\n                }\n            ],\n            \"entities\": [\n                {\n                    \"data\": \"Yuga Labs’\",\n                    \"type\": \"ORG\",\n                    \"mentions\": 3\n                },\n                {\n                    \"data\": \"Bored Ape Yacht Club\",\n                    \"type\": \"ORG\",\n                    \"mentions\": 1\n                },\n                {\n                    \"data\": \"BAYC\",\n                    \"type\": \"ORG\",\n                    \"mentions\": 1\n                },\n                {\n                    \"data\": \"Mutant Ape Yacht Club\",\n                    \"type\": \"ORG\",\n                    \"mentions\": 1\n                },\n                {\n                    \"data\": \"MAYC\",\n                    \"type\": \"ORG\",\n                    \"mentions\": 1\n                },\n                {\n                    \"data\": \"DappRadar\",\n                    \"type\": \"ORG\",\n                    \"mentions\": 2\n                },\n                {\n                    \"data\": \"NFT\",\n                    \"type\": \"ORG\",\n                    \"mentions\": 4\n                },\n                {\n                    \"data\": \"GONDI\",\n                    \"type\": \"ORG\",\n                    \"mentions\": 1\n                },\n                {\n                    \"data\": \"Blur\",\n                    \"type\": \"ORG\",\n                    \"mentions\": 3\n                },\n                {\n                    \"data\": \"OpenSea\",\n                    \"type\": \"ORG\",\n                    \"mentions\": 2\n                },\n                {\n                    \"data\": \"Otherside\",\n                    \"type\": \"PRODUCT\",\n                    \"mentions\": 1\n                },\n                {\n                    \"data\": \"CryptoPunks\",\n                    \"type\": \"PRODUCT\",\n                    \"mentions\": 1\n                }\n            ],\n            \"companies\": [\n                {\n                    \"id\": \"f0886b1323a142df88f521ba9a0bbedf\",\n                    \"name\": \"OpenSea Ventures\",\n                    \"domains\": [\n                        \"opensea.io\"\n                    ],\n                    \"symbols\": []\n                },\n                {\n                    \"id\": \"bee2238a04fe4f228252ea641c3403a7\",\n                    \"name\": \"NFT Labs\",\n                    \"domains\": [\n                        \"nftlabs.to\"\n                    ],\n                    \"symbols\": []\n                }\n            ],\n            \"sentiment\": {\n                \"positive\": 0.033333376,\n                \"negative\": 0.89130986,\n                \"neutral\": 0.07535672\n            },\n            \"summary\": \"The National Finance Finance (NFT) market experienced a three-year low in 2024, with annual trading volumes and sales counts dropping to their lowest levels since 2020. The report by blockchain analytics platform DappRadar suggests that despite a surge in crypto market activity driven by Bitcoin's all-time highs and DeFi growth, NFTs struggled under the weight of their inflated valuations. Despite early Q1 trading volumes reaching $5.3 billion, a 4% increase compared to the same period in 2023, volumes dropped to $1.5 billion in Q3 before recovering to $2.6 billion by Q4. Despite these fluctuations, overall market engagement decreased. Despite this downturn, high-profile transactions like CryptoPunk #8348, a rare seven-trait collectible from the NFT collection, were seen as a milestone for NFT's value and highlighted a market still driven by exclusivity and inflated pricing.\",\n            \"translation\": \"\",\n            \"translatedTitle\": \"\",\n            \"translatedDescription\": \"\",\n            \"translatedSummary\": \"\",\n            \"locations\": [],\n            \"reprint\": false,\n            \"reprintGroupId\": \"3d67e5bf389b40b3895ae0708f4dd208\",\n            \"places\": [],\n            \"people\": []\n        }\n    ]\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200,
+                      "default": 0
+                    },
+                    "numResults": {
+                      "type": "integer",
+                      "example": 1,
+                      "default": 0
+                    },
+                    "articles": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "example": "https://decrypt.co/301053/nft-market-hits-three-year-low-in-trading-and-sales-report"
+                          },
+                          "authorsByline": {
+                            "type": "string",
+                            "example": "Vismaya V"
+                          },
+                          "articleId": {
+                            "type": "string",
+                            "example": "680d7893185c4357a9047332cf38206c"
+                          },
+                          "clusterId": {
+                            "type": "string",
+                            "example": "37426b0543cb45e3a547695fd63e9919"
+                          },
+                          "source": {
+                            "type": "object",
+                            "properties": {
+                              "domain": {
+                                "type": "string",
+                                "example": "decrypt.co"
+                              },
+                              "paywall": {
+                                "type": "boolean",
+                                "example": false,
+                                "default": true
+                              },
+                              "location": {
+                                "type": "object",
+                                "properties": {
+                                  "country": {
+                                    "type": "string",
+                                    "example": "us"
+                                  },
+                                  "state": {
+                                    "type": "string",
+                                    "example": "NY"
+                                  },
+                                  "city": {
+                                    "type": "string",
+                                    "example": "New York"
+                                  },
+                                  "coordinates": {
+                                    "type": "object",
+                                    "properties": {
+                                      "lat": {
+                                        "type": "number",
+                                        "example": 40.7127281,
+                                        "default": 0
+                                      },
+                                      "lon": {
+                                        "type": "number",
+                                        "example": -74.0060152,
+                                        "default": 0
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "imageUrl": {
+                            "type": "string",
+                            "example": "https://cdn.decrypt.co/resize/1024/height/512/wp-content/uploads/2021/07/The-Bored-Ape-Yacht-Club-gID_7.jpeg"
+                          },
+                          "country": {
+                            "type": "string",
+                            "example": "us"
+                          },
+                          "language": {
+                            "type": "string",
+                            "example": "en"
+                          },
+                          "pubDate": {
+                            "type": "string",
+                            "example": "2025-01-15T09:20:34+00:00"
+                          },
+                          "addDate": {
+                            "type": "string",
+                            "example": "2025-01-15T09:27:57.156032+00:00"
+                          },
+                          "refreshDate": {
+                            "type": "string",
+                            "example": "2025-01-15T09:27:57.156034+00:00"
+                          },
+                          "score": {
+                            "type": "number",
+                            "example": 52.79721,
+                            "default": 0
+                          },
+                          "title": {
+                            "type": "string",
+                            "example": "NFT Market Hits Three-Year Low in Trading and Sales: Report"
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "Annual NFT trading volumes fell by 19%, while sales counts dipped by 18% compared to 2023, according to DappRadar."
+                          },
+                          "content": {
+                            "type": "string",
+                            "example": "The NFT market suffered a dismal 2024, with trading volumes and sales counts dropping to their weakest levels since 2020.\n\nAnnual trading volumes fell by 19%, while sales counts dipped by 18% compared to 2023, according to a report by blockchain analytics platform.\n\nDespite a surge in crypto market activity, driven by Bitcoin’s all-time highs and booming DeFi growth, NFTs appeared to struggle under the weight of their own inflated valuations.\n\nEarly in the year, NFT trading volumes reached $5.3 billion in Q1, a modest 4% increase compared to the same period in 2023.\n\nHowever, this momentum proved fleeting, as volumes plummeted to $1.5 billion in Q3 before recovering slightly to $2.6 billion in Q4.\n\nEven with these fluctuations, annual sales counts fell sharply, pointing to a broader trend: while individual NFTs became more expensive in line with rising crypto token prices, overall market engagement dwindled.\n\nYuga Labs’ flagship collections Bored Ape Yacht Club (BAYC) and Mutant Ape Yacht Club (MAYC) hit historic lows, with floor prices dropping to 15 ETH and 2.4 ETH, respectively.\n\nEven Otherdeeds for Yuga Labs' Otherside metaverse plummeted to 0.23 ETH, a far cry from their initial minting price, exposing cracks in Yuga’s high-priced, membership-driven model.\n\nThis coincided with DappRadar’s observation that “Perhaps 2024 helped us realize that NFTs don’t need to be expensive to prove their importance in the broader Web3 ecosystem,” a critique of the market’s reliance on exclusivity and inflated pricing.\n\nAmid this downturn, the NFT market witnessed a paradox in November when CryptoPunk #8348, a rare seven-trait collectible from the NFT collection, was collateralized for a $2.75 million loan via the NFT lending platform GONDI.\n\nTouted as a milestone for NFTs as financial assets, this event showed speculative excess when juxtaposed with DappRadar’s insights about affordability and utility.\n\nWhile high-profile transactions like this aim to affirm NFTs’ value, they also highlight a market still driven by exclusivity and inflated pricing, even as wider participation wanes.\n\nEven within the struggling sector, blue-chip collections like CryptoPunks defied trends, nearly doubling in USD value in 2024 with notable sales driving brief recovery periods.\n\nNFT platforms like Blur dominated marketplace activity, leveraging zero-fee trading and aggressive airdrop campaigns to capture the largest share of trading volumes.\n\nIn contrast, rival marketplace OpenSea struggled with regulatory headwinds and declining market sentiment, forcing significant layoffs by year-end.\n\nBy Q4, Blur and OpenSea were neck-and-neck in market share, but Blur’s ability to generate high activity from a smaller, more active user base gave it the edge, as per the report.\n\nWhile trading volumes in late 2024 hinted at a potential recovery—November sales hit $562 million, the highest since May—the overall trajectory suggests that affordability, accessibility, and utility will be critical for sustained growth in 2025."
+                          },
+                          "medium": {
+                            "type": "string",
+                            "example": "Article"
+                          },
+                          "links": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "example": "https://dappradar.com/blog/dapp-industry-report-2024-overview"
+                            }
+                          },
+                          "labels": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "example": "Roundup"
+                                }
+                              }
+                            }
+                          },
+                          "matchedAuthors": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {},
+                                "name": {
+                                  "type": "string",
+                                  "example": "Vismaya V"
+                                }
+                              }
+                            }
+                          },
+                          "claim": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "verdict": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "keywords": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "example": "NFT trading volumes"
+                                },
+                                "weight": {
+                                  "type": "number",
+                                  "example": 0.095650345,
+                                  "default": 0
+                                }
+                              }
+                            }
+                          },
+                          "topics": {
+                            "type": "array"
+                          },
+                          "categories": {
+                            "type": "array"
+                          },
+                          "taxonomies": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string",
+                                  "example": "/Finance/Investing/Currencies & Foreign Exchange"
+                                }
+                              }
+                            }
+                          },
+                          "entities": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "data": {
+                                  "type": "string",
+                                  "example": "Yuga Labs’"
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "example": "ORG"
+                                },
+                                "mentions": {
+                                  "type": "integer",
+                                  "example": 3,
+                                  "default": 0
+                                }
+                              }
+                            }
+                          },
+                          "companies": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "example": "f0886b1323a142df88f521ba9a0bbedf"
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "example": "OpenSea Ventures"
+                                },
+                                "domains": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "example": "opensea.io"
+                                  }
+                                },
+                                "symbols": {
+                                  "type": "array"
+                                }
+                              }
+                            }
+                          },
+                          "sentiment": {
+                            "type": "object",
+                            "properties": {
+                              "positive": {
+                                "type": "number",
+                                "example": 0.033333376,
+                                "default": 0
+                              },
+                              "negative": {
+                                "type": "number",
+                                "example": 0.89130986,
+                                "default": 0
+                              },
+                              "neutral": {
+                                "type": "number",
+                                "example": 0.07535672,
+                                "default": 0
+                              }
+                            }
+                          },
+                          "summary": {
+                            "type": "string",
+                            "example": "The National Finance Finance (NFT) market experienced a three-year low in 2024, with annual trading volumes and sales counts dropping to their lowest levels since 2020. The report by blockchain analytics platform DappRadar suggests that despite a surge in crypto market activity driven by Bitcoin's all-time highs and DeFi growth, NFTs struggled under the weight of their inflated valuations. Despite early Q1 trading volumes reaching $5.3 billion, a 4% increase compared to the same period in 2023, volumes dropped to $1.5 billion in Q3 before recovering to $2.6 billion by Q4. Despite these fluctuations, overall market engagement decreased. Despite this downturn, high-profile transactions like CryptoPunk #8348, a rare seven-trait collectible from the NFT collection, were seen as a milestone for NFT's value and highlighted a market still driven by exclusivity and inflated pricing."
+                          },
+                          "translation": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "translatedTitle": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "translatedDescription": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "translatedSummary": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "locations": {
+                            "type": "array"
+                          },
+                          "reprint": {
+                            "type": "boolean",
+                            "example": false,
+                            "default": true
+                          },
+                          "reprintGroupId": {
+                            "type": "string",
+                            "example": "3d67e5bf389b40b3895ae0708f4dd208"
+                          },
+                          "places": {
+                            "type": "array"
+                          },
+                          "people": {
+                            "type": "array"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Result": {
+                    "value": "The request has bad formatting or missing parameters"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Result": {
+                    "value": "No API key was provided in the request"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "403",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Result": {
+                    "value": "Request was forbidden, likely due to plan restrictions or account status"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "404",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Result": {
+                    "value": "The requested resource was not found"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Result": {
+                    "value": "Some internal error has occurred, please contact support"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [],
+        "x-readme": {
+          "code-samples": [
+            {
+              "language": "curl",
+              "code": "$ curl 'https://api.goperigon.com/v1/all?category=Business&sourceGroup=top100&showReprints=false&apiKey=API_KEY'"
+            },
+            {
+              "language": "python",
+              "code": "import requests\n\nAPI_KEY = \"API_KEY\"\nurl = f\"https://api.goperigon.com/v1/all?category=Business&sourceGroup=top100&showReprints=false&apiKey={API_KEY}\"\n\nresp = requests.get(url)\n\nprint(resp.json())"
+            },
+            {
+              "language": "ruby",
+              "code": "require 'net/http'\n\napi_key = \"API_KEY\"\nurl = URI.parse(\"https://api.goperigon.com/v1/all?category=Business&sourceGroup=top100&showReprints=false&apiKey=#{api_key}\")\nres = Net::HTTP.get(URI.parse(url.to_s))\n\nputs res"
+            },
+            {
+              "language": "go",
+              "code": "package main\n\nimport (\n    \"fmt\"\n    \"net/http\"\n    \"io/ioutil\"\n)\n\nfunc main() {\n    key := \"API_KEY\"\n    url := \"https://api.goperigon.com/v1/all?category=Business&sourceGroup=top100&showReprints=false&apiKey=\" + key \n    res, err := http.Get(url)\n    if err != nil {\n        fmt.Println(err)\n    }\n    \n    defer res.Body.Close()\n    body, err := ioutil.ReadAll(res.Body)\n    if err != nil {\n        fmt.Println(err)\n    }\n    \n    fmt.Println(string(body))\n}"
+            },
+            {
+              "language": "javascript",
+              "code": "const axios = require('axios');\nconst apiKey = \"API_KEY\"\nconst url = `https://api.goperigon.com/v1/all?category=Business&sourceGroup=top100&showReprints=false&apiKey=${apiKey}`\n\naxios.get(url)\n  .then((response) => {\n    console.log(response);\n  })\n  .catch((error) => {\n    console.log(error);\n  });"
+            }
+          ],
+          "samples-languages": [
+            "curl",
+            "python",
+            "ruby",
+            "go",
+            "javascript"
+          ]
+        }
+      }
+    },
+    "/v1/stories/all": {
+      "get": {
+        "summary": "Stories",
+        "description": "",
+        "operationId": "stories-1",
+        "parameters": [
+          {
+            "name": "apiKey",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Search story by name, summary and key points. Preference is given to the name field. Supports complex query syntax, same way as **q** parameter from **/all** endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Search story by name. Supports complex query syntax, same way as **q** parameter from **/all** endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "topic",
+            "in": "query",
+            "description": "Filter by topics. Each topic is some kind of entity that the article is about. Examples of topics: Markets, Joe Biden, Green Energy, Climate Change, Cryptocurrency, etc. If multiple parameters are passed, they will be applied as OR operations. <a href=\"/docs/topics-categories#topics\">More ➜</a>",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Filter by categories. Categories are general themes that the article is about. Examples of categories: Tech, Politics, etc. If multiple parameters are passed, they will be applied as OR operations. Use 'none' to search uncategorized articles. <a href=\"/docs/topics-categories#categories\">More ➜</a>",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Politics",
+                "Tech",
+                "Sports",
+                "Business",
+                "Finance",
+                "Entertainment",
+                "Health",
+                "Weather",
+                "Lifestyle",
+                "Auto",
+                "Science",
+                "Travel",
+                "Environment",
+                "World",
+                "General",
+                "none"
+              ]
+            }
+          },
+          {
+            "name": "clusterId",
+            "in": "query",
+            "description": "Filter to specific story. Passing a cluster ID will filter results to only the content found within the cluster. Multiple params could be passed.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "description": "Filter stories by sources that wrote articles belonging to this story. At least 1 article is required for story to match. Multiple parameters could be passed.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sourceGroup",
+            "in": "query",
+            "description": "Filter stories by sources that wrote articles belonging to this story. Source groups are expanded into a list of sources. At least 1 article by the source is required for story to match. Multiple params could be passed.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "personWikidataId",
+            "in": "query",
+            "description": "List of person Wikidata IDs for filtering. Filter is applied on topPeople field.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "personName",
+            "in": "query",
+            "description": "List of people names. Filtering is applied on topPeople field.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "List of company IDs for filtering. Filtering is applied to topCompanies field.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "companyName",
+            "in": "query",
+            "description": "List of company names for filtering. Filtering is applied on topCompanies field.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "companyDomain",
+            "in": "query",
+            "description": "List of company domains for filtering. Filtering is applied on topCompanies field.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "companySymbol",
+            "in": "query",
+            "description": "List of company tickers for filtering. Filtering is applied on topCompanies field.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "nameExists",
+            "in": "query",
+            "description": "Returns stories with name assigned. Defaults to true.",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "'from' filter, will search stories created after the specified date, the date could be passed as ISO or 'yyyy-mm-dd'. Add time in ISO format, ie. 2023-03-01T00:00:00",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "'to' filter, will search stories created before the specified date, the date could be passed as ISO or 'yyyy-mm-dd'. Add time in ISO format, ie. 2023-03-01T23:59:59",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "initializedFrom",
+            "in": "query",
+            "description": "'initializedFrom' filter, will search stories that became available after provided date",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "initializedTo",
+            "in": "query",
+            "description": "'initializedTo' filter, will search stories that became available before provided date",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "updatedFrom",
+            "in": "query",
+            "description": "Will return stories with 'updatedAt' >= 'updatedFrom'.",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "updatedTo",
+            "in": "query",
+            "description": "Will return stories with 'updatedAt' <= 'updatedTo'.",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "minClusterSize",
+            "in": "query",
+            "description": "Filter by minimum cluster size. Minimum cluster size filter applies to number of **unique** articles.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 5
+            }
+          },
+          {
+            "name": "maxClusterSize",
+            "in": "query",
+            "description": "Filter by maximum cluster size. Maximum cluster size filter applies to number of **unique** articles in the cluster.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "Filter local news by state. Applies only to local news, when this param is passed non-local news will not be returned. If multiple parameters are passed, they will be applied as OR operations.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "description": "Filter local news by city. Applies only to local news, when this param is passed non-local news will not be returned. If multiple parameters are passed, they will be applied as OR operations. <a href=\"/docs/local-news\">More ➜</a>",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "area",
+            "in": "query",
+            "description": "Filter local news by area. Applies only to local news, when this param is passed non-local news will not be returned. If multiple parameters are passed, they will be applied as OR operations.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page number. From 0 to 10000. See the Pagination section for limitations.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Number of stories results per page, from 0 to 100.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Sort stories by count, creation date, last updated date. By default is sorted by created at.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "createdAt",
+                "updatedAt",
+                "count"
+              ],
+              "default": "createdAt"
+            }
+          },
+          {
+            "name": "showNumResults",
+            "in": "query",
+            "description": "Show total number of results. By default set to false, will cap result count at 10000.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "showDuplicates",
+            "in": "query",
+            "description": "Stories are deduplicated by default. If a story is deduplicated, all future articles are merged into the original story. *duplicateOf* field contains the original cluster Id. When *showDuplicates=true*, all stories are shown.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "positiveSentimentFrom",
+            "in": "query",
+            "description": "Filters results with a sentiment score greater than or equal to the specified value, indicating positive sentiment. See the Article Data section in Docs for an explanation of scores.",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "positiveSentimentTo",
+            "in": "query",
+            "description": "Filters results with a sentiment score less than or equal to the specified value, indicating positive sentiment. See the Article Data section in Docs for an explanation of scores.",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "neutralSentimentFrom",
+            "in": "query",
+            "description": "Filters results with a sentiment score greater than or equal to the specified value, indicating neutral sentiment. Explanation of sentimental values can be found in Docs under the Article Data section.",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "neutralSentimentTo",
+            "in": "query",
+            "description": "Filters results with a sentiment score less than or equal to the specified value, indicating neutral sentiment. See the Article Data section in Docs for an explanation of scores.",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "negativeSentimentFrom",
+            "in": "query",
+            "description": "Filters results with a sentiment score greater than or equal to the specified value, indicating negative sentiment. See the Article Data section in Docs for an explanation of scores.",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "negativeSentimentTo",
+            "in": "query",
+            "description": "Filters results with a sentiment score less than or equal to the specified value, indicating negative sentiment. See the Article Data section in Docs for an explanation of scores.",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "description": "Country code to filter by country. If multiple parameters are passed, they will be applied as OR operations.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "us",
+                "gb",
+                "de",
+                "it",
+                "fr",
+                "nl",
+                "se",
+                "dk",
+                "fi",
+                "hu",
+                "no",
+                "pl",
+                "pt",
+                "ru",
+                "ua",
+                "ch",
+                "br",
+                "nz",
+                "mx",
+                "au"
+              ]
+            }
+          },
+          {
+            "name": "taxonomy",
+            "in": "query",
+            "description": "Filters by Google Content Categories. This field will accept 1 or more categories, must pass the full name of the category. Example: taxonomy=/Finance/Banking/Other, /Finance/Investing/Funds",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "topTaxonomies",
+            "in": "query",
+            "description": "Filters by Google Content Categories. Highlights the top 3 categories in a cluster, ordered by count.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"status\": 200,\n    \"numResults\": 18,\n    \"results\": [\n        {\n            \"createdAt\": \"2025-01-29T08:11:03.602007+00:00\",\n            \"updatedAt\": \"2025-01-29T14:46:26.744051+00:00\",\n            \"initializedAt\": \"2025-01-29T08:42:16.214884+00:00\",\n            \"id\": \"dc0612a3ff094e94be93f5713db2a940\",\n            \"name\": \"Norway's Wealth Fund Reports Record $222 Billion Profit\",\n            \"summary\": \"Norway's $1.8 trillion sovereign wealth fund announced a record annual profit of 2.51 trillion crowns ($222 billion) for 2024, primarily driven by a strong performance in the technology sector. CEO Nicolai Tangen noted that American tech giants like Apple, Microsoft, and Nvidia played a crucial role in this success, contributing to an overall return on investment of 13%. Despite this impressive profit, state inflows into the fund were lower than previous records, and returns from fixed income and real estate investments lagged. The fund, which averages 1.5% ownership of publicly listed stocks worldwide, continues to leverage revenues from Norway's oil and gas production. This milestone underscores the fund's strategic importance in bolstering Norway's economic position globally. Overall, the tech rally significantly enhanced the fund's financial standing in 2024.\",\n            \"summaryReferences\": [\n                \"5e5c0b136c214f588e4bcc18d9bcc1bc\",\n                \"ffe6384f9f214f3782d99f06d56af619\",\n                \"ac1002cc44f44632b4a29e2152e895cb\",\n                \"f3dac6be5b5d42aa8a0c49f6c4fff237\",\n                \"68c97189db94453597766a8b6bb6faf0\"\n            ],\n            \"keyPoints\": [\n                {\n                    \"point\": \"Nicolai Tangen noted, 'Despite the impressive profit, the return on investment was slightly below our benchmark index,' indicating a need for improvement in future results.\",\n                    \"references\": [\n                        \"5e5c0b136c214f588e4bcc18d9bcc1bc\"\n                    ]\n                },\n                {\n                    \"point\": \"The fund's equity investments yielded an 18% return, while fixed income investments only saw a 1% increase, showcasing a stark contrast in performance across asset classes.\",\n                    \"references\": [\n                        \"ffe6384f9f214f3782d99f06d56af619\"\n                    ]\n                },\n                {\n                    \"point\": \"State inflows into the fund amounted to 402 billion crowns, highlighting a decrease compared to the previous record high of 2022, which affects future investment capabilities.\",\n                    \"references\": [\n                        \"ac1002cc44f44632b4a29e2152e895cb\"\n                    ]\n                }\n            ],\n            \"sentiment\": {\n                \"positive\": 0.7317738,\n                \"negative\": 0.11641231,\n                \"neutral\": 0.15181391\n            },\n            \"uniqueCount\": 15,\n            \"reprintCount\": 14,\n            \"totalCount\": 29,\n            \"countries\": [\n                {\n                    \"name\": \"in\",\n                    \"count\": 6\n                },\n                {\n                    \"name\": \"us\",\n                    \"count\": 14\n                },\n                {\n                    \"name\": \"ca\",\n                    \"count\": 3\n                },\n                {\n                    \"name\": \"ie\",\n                    \"count\": 1\n                },\n                {\n                    \"name\": \"am\",\n                    \"count\": 1\n                },\n                {\n                    \"name\": \"ae\",\n                    \"count\": 1\n                },\n                {\n                    \"name\": \"my\",\n                    \"count\": 1\n                },\n                {\n                    \"name\": \"ph\",\n                    \"count\": 1\n                }\n            ],\n            \"topCountries\": [\n                \"us\"\n            ],\n            \"topics\": [\n                {\n                    \"name\": \"Odd News\",\n                    \"count\": 1\n                },\n                {\n                    \"name\": \"Markets\",\n                    \"count\": 5\n                },\n                {\n                    \"name\": \"Economy\",\n                    \"count\": 1\n                }\n            ],\n            \"topTopics\": [\n                {\n                    \"name\": \"Markets\"\n                }\n            ],\n            \"categories\": [\n                {\n                    \"name\": \"Business\",\n                    \"count\": 7\n                },\n                {\n                    \"name\": \"Finance\",\n                    \"count\": 7\n                },\n                {\n                    \"name\": \"World\",\n                    \"count\": 1\n                }\n            ],\n            \"topCategories\": [\n                {\n                    \"name\": \"Business\"\n                },\n                {\n                    \"name\": \"Finance\"\n                }\n            ],\n            \"taxonomies\": [\n                {\n                    \"name\": \"/News/Business News/Financial Markets News\",\n                    \"count\": 26\n                },\n                {\n                    \"name\": \"/Finance/Investing/Other\",\n                    \"count\": 26\n                },\n                {\n                    \"name\": \"/News/Business News/Other\",\n                    \"count\": 23\n                },\n                {\n                    \"name\": \"/News/Business News/Company News\",\n                    \"count\": 26\n                },\n                {\n                    \"name\": \"/Finance/Investing/Funds\",\n                    \"count\": 21\n                },\n                {\n                    \"name\": \"/News/Business News/Economy News\",\n                    \"count\": 7\n                },\n                {\n                    \"name\": \"/Finance/Investing/Stocks & Bonds\",\n                    \"count\": 25\n                },\n                {\n                    \"name\": \"/Finance/Financial Planning & Management/Asset & Portfolio Management\",\n                    \"count\": 1\n                },\n                {\n                    \"name\": \"/News/Technology News\",\n                    \"count\": 2\n                }\n            ],\n            \"topTaxonomies\": [\n                {\n                    \"name\": \"/News/Business News/Financial Markets News\"\n                },\n                {\n                    \"name\": \"/Finance/Investing/Other\"\n                },\n                {\n                    \"name\": \"/News/Business News/Company News\"\n                },\n                {\n                    \"name\": \"/Finance/Investing/Stocks & Bonds\"\n                },\n                {\n                    \"name\": \"/News/Business News/Other\"\n                },\n                {\n                    \"name\": \"/Finance/Investing/Funds\"\n                }\n            ],\n            \"people\": [\n                {\n                    \"wikidataId\": \"Q56408252\",\n                    \"name\": \"Nicolai Tangen\",\n                    \"count\": 24\n                },\n                {\n                    \"wikidataId\": \"Q22686\",\n                    \"name\": \"Donald Trump\",\n                    \"count\": 2\n                }\n            ],\n            \"topPeople\": [\n                {\n                    \"wikidataId\": \"Q56408252\",\n                    \"name\": \"Nicolai Tangen\"\n                }\n            ],\n            \"companies\": [\n                {\n                    \"id\": \"4de51cf8472b4ce7a5aecdf52a1de4c0\",\n                    \"name\": \"Microsoft Corporation\",\n                    \"domains\": [\n                        \"microsoft.com\"\n                    ],\n                    \"symbols\": [\n                        \"4338.HK\",\n                        \"MSF.BR\",\n                        \"MSF.DE\",\n                        \"MSFT\"\n                    ],\n                    \"count\": 2\n                },\n                {\n                    \"id\": \"806457af1fd9418db78388760f52c06f\",\n                    \"name\": \"Alphabet Inc.\",\n                    \"domains\": [\n                        \"abc.xyz\"\n                    ],\n                    \"symbols\": [\n                        \"ABEA.DE\",\n                        \"ABEC.DE\",\n                        \"GOOG\",\n                        \"GOOGL\",\n                        \"GOOGL.SW\"\n                    ],\n                    \"count\": 1\n                },\n                {\n                    \"id\": \"94bbd0512cd04cc4b7041d78d9d4cf73\",\n                    \"name\": \"NVIDIA Corporation\",\n                    \"domains\": [\n                        \"nvidia.com\"\n                    ],\n                    \"symbols\": [\n                        \"NVD.DE\",\n                        \"NVDA\"\n                    ],\n                    \"count\": 3\n                }\n            ],\n            \"topCompanies\": [],\n            \"locations\": [\n                {\n                    \"count\": 5\n                },\n                {\n                    \"state\": \"03\",\n                    \"city\": \"Oslo\",\n                    \"count\": 9\n                }\n            ],\n            \"topLocations\": [\n                {\n                    \"state\": \"03\",\n                    \"city\": \"Oslo\"\n                },\n                {}\n            ]\n        },"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"status\": 400,\n    \"message\": \"Errors during parameter validation: \\nError on parameter 'updatedFrom', invalid value 'test': Failed to convert property value of type 'java.lang.String' to required type 'java.time.OffsetDateTime' for property 'updatedFrom'; nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type [@com.gawq.api.formatting.DateTimeRequestParam java.time.OffsetDateTime] for value [test]; nested exception is java.lang.IllegalArgumentException: Parse attempt failed for value [test]\",\n    \"timestamp\": 1730827027255\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400,
+                      "default": 0
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Errors during parameter validation: \nError on parameter 'updatedFrom', invalid value 'test': Failed to convert property value of type 'java.lang.String' to required type 'java.time.OffsetDateTime' for property 'updatedFrom'; nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type [@com.gawq.api.formatting.DateTimeRequestParam java.time.OffsetDateTime] for value [test]; nested exception is java.lang.IllegalArgumentException: Parse attempt failed for value [test]"
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "example": 1730827027255,
+                      "default": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": [],
+        "x-readme": {
+          "code-samples": [
+            {
+              "language": "curl",
+              "code": "$ curl 'https://api.goperigon.com/v1/stories/all?category=Business&from=2023-03-01&apiKey=API_KEY",
+              "name": "curl"
+            },
+            {
+              "language": "python",
+              "code": "import requests\n\nAPI_KEY = \"API_KEY\"\nurl = f\"https://api.goperigon.com/v1/all?category=Business&apiKey={API_KEY}\"\n\nresp = requests.get(url)\n\nprint(resp.json())",
+              "name": "python"
+            }
+          ],
+          "samples-languages": [
+            "curl",
+            "python"
+          ]
+        }
+      }
+    }
+  },
+  "x-readme": {
+    "headers": [
+      {
+        "key": "Accept",
+        "value": "application/json"
+      }
+    ]
+  },
+  "x-readme-fauxas": true
+}
