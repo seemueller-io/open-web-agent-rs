@@ -5,7 +5,6 @@ Remote genaiscript host for integration into conversational AI applications.
 ### Disclaimer
 This has not undergone a formal security assessment. You should do your own evaluation before using this.
 
-
 ### Features not included in this fork
 - Capabilities API: Reports available agents via HTTP (useful for dynamic intent mapping)
 
@@ -118,6 +117,10 @@ If your agent requires specific API keys or configuration, add them to the `Shim
 ## License
 
 This project is licensed under the [MIT License](LICENSE)
+
+## FAQ
+> Q: Why Rust?
+> A: Stronger primitives for STDIO and process management.
 
 
 Development History (Nov 2024 – May 2025)
