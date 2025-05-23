@@ -109,6 +109,7 @@ Comprehensive documentation is available in the [docs](./docs) directory:
 - [API Documentation](./docs/api.md) - API endpoints and usage examples
 - [Authentication](./docs/tokens.md) - Authentication system documentation
 - [Agents Guide](./docs/agents.md) - How to create and use agents
+- [Input Documentation](./docs/input.md) - How input works for agents
 
 ## License
 

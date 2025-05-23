@@ -136,3 +136,8 @@ curl https://your-server.com/webhooks/<stream_id> \
 3. Handle errors gracefully
 4. Provide clear instructions in the agent's prompt
 5. Test your agent thoroughly before deploying
+
+## Related Documentation
+
+- [Input Documentation](./input.md) - How input works for agents
+- [API Documentation](./api.md) - API endpoints and usage examples
