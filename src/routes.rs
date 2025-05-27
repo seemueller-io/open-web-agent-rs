@@ -1,5 +1,5 @@
 use crate::handlers::webhooks::handle_webhooks_post;
-use crate::handlers::{error::handle_not_found, ui::serve_ui, webhooks::handle_webhooks};
+use crate::handlers::{not_found::handle_not_found, ui::serve_ui, webhooks::handle_webhooks};
 use axum::routing::post;
 use axum::routing::{get, Router};
 use tower_http::trace::{self, TraceLayer};

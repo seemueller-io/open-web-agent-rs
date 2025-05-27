@@ -1,4 +1,3 @@
-// src/handlers/error.rs
 use axum::{
     http::StatusCode,
     Json,

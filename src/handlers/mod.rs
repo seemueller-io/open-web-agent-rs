@@ -1,6 +1,5 @@
 
 // src/handlers/mod.rs
-pub mod error;
-pub mod status;
+pub mod not_found;
 pub mod ui;
 pub mod webhooks;
