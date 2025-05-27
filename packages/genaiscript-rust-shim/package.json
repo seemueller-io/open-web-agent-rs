@@ -1,5 +1,5 @@
 {
-  "name": "@web-agent-rs/genaiscript-rust-shim",
+  "name": "@open-web-agent-rs/genaiscript-rust-shim",
   "module": "index.ts",
   "private": true,
   "type": "module",

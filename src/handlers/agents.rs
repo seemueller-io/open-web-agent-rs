@@ -18,7 +18,7 @@ use tokio::sync::Mutex;
 // init sled
 lazy_static! {
     static ref DB: Arc<Mutex<sled::Db>> = Arc::new(Mutex::new(
-        sled::open("./web-agent-rs/db/stream_store").expect("Failed to open sled database")
+        sled::open("./open-web-agent-rs/db/stream_store").expect("Failed to open sled database")
     ));
 }
 

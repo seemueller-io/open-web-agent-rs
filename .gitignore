@@ -1,8 +1,6 @@
 /target
 /node_modules/
 /.idea
-prompt.md
-todo
 chrome
 stream_store
 data/

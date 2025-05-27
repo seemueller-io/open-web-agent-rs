@@ -2,7 +2,7 @@
 
 ## Environment Variables
 
-web-agent-rs uses environment variables for configuration. These can be set in a `.env` file in the root directory or directly in your environment.
+open-web-agent-rs uses environment variables for configuration. These can be set in a `.env` file in the root directory or directly in your environment.
 
 ### Required Environment Variables
 

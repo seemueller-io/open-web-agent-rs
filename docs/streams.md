@@ -4,7 +4,7 @@ This document describes how the stream data is formatted as it comes across the 
 
 ## Overview
 
-The web-agent-rs uses Server-Sent Events (SSE) to stream data from agents to clients. This allows for real-time updates as the agent processes the request and generates responses.
+The open-web-agent-rs uses Server-Sent Events (SSE) to stream data from agents to clients. This allows for real-time updates as the agent processes the request and generates responses.
 
 ## Stream Format
 
