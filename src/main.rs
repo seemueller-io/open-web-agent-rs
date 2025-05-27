@@ -10,7 +10,6 @@ mod handlers;
 mod agents;
 mod genaiscript;
 mod utils;
-mod session_identify;
 
 #[tokio::main]
 async fn main() {
@@ -18,7 +17,7 @@ async fn main() {
     init_logging();
 
     // init server configuration
-    let config = AppConfig::new();
+    let _ = AppConfig::new();
 
     // Create router with all routes
     let app = create_router();

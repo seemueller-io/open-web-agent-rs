@@ -1,4 +1,3 @@
-// src/config.rs
 pub struct AppConfig {
     pub env_vars: Vec<String>,
 }
@@ -6,7 +5,7 @@ pub struct AppConfig {
 
 impl AppConfig {
     pub fn new() -> Self {
-        // Load .env file if it exists
+        // automatic configuration between local/docker environments
         match dotenv::dotenv() {
             Ok(_) => tracing::debug!("Loaded .env file successfully"),
             Err(e) => tracing::debug!("No .env file found or error loading it: {}", e),
@@ -15,8 +14,6 @@ impl AppConfig {
         Self {
             env_vars: vec![
                 "OPENAI_API_KEY".to_string(),
-                "BING_SEARCH_API_KEY".to_string(),
-                "TAVILY_API_KEY".to_string(),
                 "GENAISCRIPT_MODEL_LARGE".to_string(),
                 "GENAISCRIPT_MODEL_SMALL".to_string(),
                 "SEARXNG_API_BASE_URL".to_string(),
