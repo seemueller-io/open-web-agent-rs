@@ -18,7 +18,6 @@ use std::time::Duration;
 use tokio::io::{AsyncBufReadExt, BufReader};
 use tokio::process::Command;
 use tokio::sync::Mutex;
-use crate::agents::crypto_market::finance_query_agent;
 use crate::agents::image_generator::image_generator;
 
 // init sled
@@ -100,7 +99,6 @@ pub async fn handle_webhooks(Path(stream_id): Path<String>) -> impl IntoResponse
                 "web-search" => search_agent(stream_id.as_str(), &*input).await,
                 "news-search" => news_agent(stream_id.as_str(), &*input).await,
                 "image-generator" => image_generator(stream_id.as_str(), &*input).await,
-                "finance-query" => finance_query_agent(stream_id.as_str(), &*input).await,
                 "web-scrape" => scrape_agent(stream_id.as_str(), &*input).await,
                 _ => {
                     tracing::error!("Unsupported resource type: {}", resource);
