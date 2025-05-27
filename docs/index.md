@@ -12,7 +12,7 @@ Welcome to the documentation for web-agent-rs, a GenAIScript host for integratio
 
 ## Overview
 
-web-agent-rs is a server that hosts GenAIScript agents for integration into conversational AI applications. It provides a simple API for creating and consuming stream resources that execute various agents to perform tasks like web search, news search, image generation, finance queries, and web scraping.
+web-agent-rs is a server that hosts GenAIScript agents for integration into conversational AI applications. It provides a simple API for creating and consuming stream resources that execute various agents to perform tasks like web search, news search, image generation, and web scraping.
 
 ## Architecture
 

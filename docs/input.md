@@ -128,23 +128,10 @@ genaiscript run packages/genaiscript/genaisrc/web-scrape.genai.mts --vars USER_I
 genaiscript run packages/genaiscript/genaisrc/web-scrape.genai.mts --vars USER_INPUT='{"url":"https://www.time4learning.com/homeschool-curriculum/high-school/eleventh-grade/math.html","query":"What is on this page?", "action": "scrape"}'
 ```
 
-#### Finance Query Agent
-
-```bash
-# Crypto quote
-genaiscript run packages/genaiscript/genaisrc/finance-query.genai.mts --vars USER_INPUT='Get a quote for BTC'
-
-# Crypto news
-genaiscript run packages/genaiscript/genaisrc/finance-query.genai.mts --vars USER_INPUT='What is the news for Bitcoin?'
-
-# Market overview
-genaiscript run packages/genaiscript/genaisrc/finance-query.genai.mts --vars USER_INPUT='What are the trending symbols in the market?'
-```
 
 Note the different input formats:
 - Simple text queries for search and news agents
 - JSON objects for the web scrape agent, specifying URL, query, and action
-- Specific command-like queries for the finance agent
 
 ## Related Documentation
 

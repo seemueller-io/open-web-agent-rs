@@ -44,7 +44,7 @@ Creates a new stream resource for an agent.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `resource` | string | The type of agent to use (e.g., "web-search", "news-search", "image-generator", "finance-query", "web-scrape") |
+| `resource` | string | The type of agent to use (e.g., "web-search", "news-search", "image-generator", "web-scrape") |
 | `input` | string | The input query or prompt for the agent |
 
 **Response:**
@@ -81,7 +81,6 @@ The following agent types are available for use with the `resource` field in the
 | `web-search` | Performs web searches using SearxNG |
 | `news-search` | Searches for news articles |
 | `image-generator` | Generates images based on text prompts |
-| `finance-query` | Provides financial information |
 | `web-scrape` | Scrapes content from web pages |
 
 ## Error Responses

@@ -13,7 +13,6 @@ The following agents are currently available:
 | Web Search | Performs web searches using SearxNG | `web-search` |
 | News Search | Searches for news articles | `news-search` |
 | Image Generator | Generates images based on text prompts | `image-generator` |
-| Finance Query | Provides financial information | `finance-query` |
 | Web Scrape | Scrapes content from web pages | `web-scrape` |
 
 ## Creating a New Agent
@@ -55,7 +54,7 @@ use tracing;
 
 use crate::utils::utils::run_agent;
 
-pub async fn your_agent_name(stream_id: &str, input: &str) -> Result<Child, String> {
+pub async fn agent(stream_id: &str, input: &str) -> Result<Child, String> {
     run_agent(stream_id, input, "./packages/genaiscript/genaisrc/your-agent.genai.mts").await
 }
 ```
@@ -65,20 +64,20 @@ pub async fn your_agent_name(stream_id: &str, input: &str) -> Result<Child, Stri
 Add your agent to the `src/agents/mod.rs` file:
 
 ```rust
-pub mod your_agent_name;
+pub(crate) mod your_module;
 ```
 
 ### 4. Register the Agent in the Webhook Handler
 
-Add your agent to the match statement in the `handle_webhooks_post` function in `src/handlers/webhooks.rs`:
+Add your agent to the match statement in the `use_agent` function in `src/handlers/agents.rs`:
 
 ```
-// In the handle_webhooks_post function
+// In the use_agent function
 let cmd = match resource.as_str() {
-    "web-search" => search_agent(stream_id.as_str(), &*input).await,
-    "news-search" => news_agent(stream_id.as_str(), &*input).await,
+    "web-search" => crate::agents::search::agent(agent_id.as_str(), &*input).await,
+    "news-search" => crate::agents::news::agent(agent_id.as_str(), &*input).await,
     // Add your agent here
-    "your-resource-name" => your_agent_name(stream_id.as_str(), &*input).await,
+    "your-resource-name" => crate::agents::your_module::agent(agent_id.as_str(), &*input).await,
     _ => {
         tracing::error!("Unsupported resource type: {}", resource);
         return StatusCode::BAD_REQUEST.into_response();
