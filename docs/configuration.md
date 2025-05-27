@@ -33,7 +33,7 @@ services:
   web-agent:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Local.Dockerfile
     ports:
       - "3006:3006"
     environment:
