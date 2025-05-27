@@ -47,7 +47,7 @@ pub fn create_router() -> Router {
         .route("/api/webhooks", post(handle_webhooks_post))
         // consume a stream resource
         .route("/webhooks/:stream_id", get(handle_webhooks))
-        .route_layer(axum::middleware::from_fn(auth))
+        // .route_layer(axum::middleware::from_fn(auth)) // uncomment to implement your own auth
         .route("/health", get(health))
         .layer(
             TraceLayer::new_for_http()
