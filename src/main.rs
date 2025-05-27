@@ -7,7 +7,6 @@ mod routes;
 mod setup;
 mod handlers;
 mod agents;
-mod genaiscript;
 mod utils;
 
 #[tokio::main]
