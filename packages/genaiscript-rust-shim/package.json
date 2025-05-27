@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "buildShim": "esbuild genaiscript-rust-shim.ts --bundle --format=esm --packages=external --outdir=dist --platform=node && chmod +x dist/genaiscript-rust-shim.js",
-    "setupDev": "cp dist/genaiscript-rust-shim.js ../../dist/genaiscript-rust-shim.js"
+    "setupDev": "cp -R ./dist ../../"
   },
   "devDependencies": {
     "@types/bun": "latest",

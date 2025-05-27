@@ -1,4 +1,10 @@
 services:
+  searxng:
+    build:
+      context: ./searxng # Path to the directory containing the searxng.Dockerfile
+      dockerfile: searxng.Dockerfile
+    ports:
+      - "8080:8080" # Expose SearxNG on port 8080
   agent-server:
     build:
       context: .

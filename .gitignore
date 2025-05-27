@@ -4,7 +4,8 @@
 chrome
 stream_store
 data/
-web-agent-rs/
+/open-web-agent-rs/
+/dist/
 ./.env*
 /.genaiscript/
 /packages/genaiscript/node_modules/

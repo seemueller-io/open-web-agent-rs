@@ -86,7 +86,7 @@ pub async fn use_agent(Path(agent_id): Path<String>) -> impl IntoResponse {
             let input = serde_json::to_string(&info.payload.input).unwrap_or_default();
 
             tracing::debug!(
-                "Processing webhook - Resource: {}, Stream ID: {}",
+                "Executing agent - Type: {}, Id: {}",
                 resource,
                 agent_id
             );
@@ -228,7 +228,7 @@ pub async fn create_agent(Json(payload): Json<WebhookPostRequest>) -> impl IntoR
                     // Verify the write by attempting to read it back
                     match db.get(&stream_id) {
                         Ok(Some(_)) => {
-                            let stream_url = format!("/webhooks/{}", stream_id);
+                            let stream_url = format!("/agents/{}", stream_id);
                             tracing::info!(
                                 "Successfully created and verified stream URL: {}",
                                 stream_url

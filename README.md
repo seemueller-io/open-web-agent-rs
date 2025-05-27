@@ -2,6 +2,42 @@
 Remote genaiscript host for integration into conversational AI applications.
 > This application is actively being ported, expect breaking changes.
 
+
+## Quickstart
+```bash
+git clone <repo-url>
+bun i
+bun run build
+bun dev
+```
+
+```javascript
+#!/usr/bin/env node
+
+(async () => {
+    const url = "http://localhost:3006"
+    const createAgentRequestParams = {
+        
+    };
+    
+    const createAgentRequest = fetch(url, {
+        method: "POST",
+        body: JSON.stringify(createAgentRequestParams)
+    });
+    
+    const {streamId} = await createAgentRequest.json();
+    
+    
+    const streamUrl = new URL(url);
+    streamUrl.pathname = streamId;
+    const eventsource = new EventSource(streamUrl)
+    
+    eventsource.onmessage = (event) => {
+        console.log(JSON.stringify(event))
+    }
+})
+```
+
 ### Disclaimer
 This has not undergone a formal security assessment. You should do your own evaluation before using this.
 
