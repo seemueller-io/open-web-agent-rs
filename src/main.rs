@@ -1,5 +1,4 @@
-// src/main.rs
-use crate::config::AppConfig;
+use crate::config::{Runtime};
 use crate::routes::create_router;
 use crate::setup::init_logging;
 
@@ -13,18 +12,14 @@ mod utils;
 
 #[tokio::main]
 async fn main() {
-    // Initialize logging
     init_logging();
 
-    // init server configuration
-    let _ = AppConfig::new();
+    Runtime::configure();
 
-    // Create router with all routes
-    let app = create_router();
+    let router = create_router();
 
-    // Start core
     let addr = "0.0.0.0:3006";
-    tracing::info!("Attempting to bind core to {}", addr);
+    tracing::info!("Attempting to bind server to {}", addr);
 
     let listener = match tokio::net::TcpListener::bind(addr).await {
         Ok(l) => {
@@ -38,5 +33,5 @@ async fn main() {
     };
 
     tracing::info!("Server starting on {}", listener.local_addr().unwrap());
-    axum::serve(listener, app.into_make_service()).await.unwrap();
+    axum::serve(listener, router.into_make_service()).await.unwrap();
 }
