@@ -6,5 +6,5 @@ pub async fn image_generator(stream_id: &str, input: &str) -> Result<Child, Stri
                 "Running image generator, \ninput: {}",
                 input
             );
-    run_agent(stream_id, input, "./packages/genaiscript/genaisrc/image-generator.genai.mts").await
+    run_agent(stream_id, input, "./packages/genaiscript/genaisrc/image-generator.genai.mts", 10).await
 }

@@ -4,7 +4,7 @@ use tracing;
 use crate::utils::utils::run_agent;
 
 pub async fn search_agent(stream_id: &str, input: &str) -> Result<Child, String> {
-    run_agent(stream_id, input, "./packages/genaiscript/genaisrc/web-search.genai.mts").await
+    run_agent(stream_id, input, "./packages/genaiscript/genaisrc/web-search.genai.mts", 10).await
 }
 
 
