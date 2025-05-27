@@ -1,10 +1,10 @@
-pub struct AppConfig {
+pub struct Runtime {
     pub env_vars: Vec<String>,
 }
 
 
-impl AppConfig {
-    pub fn new() -> Self {
+impl Runtime {
+    pub fn configure() -> Self {
         // automatic configuration between local/docker environments
         match dotenv::dotenv() {
             Ok(_) => tracing::debug!("Loaded .env file successfully"),
