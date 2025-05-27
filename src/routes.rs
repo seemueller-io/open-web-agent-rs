@@ -1,5 +1,5 @@
-use crate::handlers::webhooks::handle_webhooks_post;
-use crate::handlers::{not_found::handle_not_found, ui::serve_ui, webhooks::handle_webhooks};
+use crate::handlers::agents::create_agent;
+use crate::handlers::{not_found::handle_not_found, ui::serve_ui, agents::use_agent};
 use axum::routing::post;
 use axum::routing::{get, Router};
 use tower_http::trace::{self, TraceLayer};
@@ -9,9 +9,9 @@ pub fn create_router() -> Router {
     Router::new()
         .route("/", get(serve_ui))
         // create an agent
-        .route("/api/agents", post(handle_webhooks_post))
+        .route("/api/agents", post(create_agent))
         // connect the agent
-        .route("/agents/:agent_id", get(handle_webhooks))
+        .route("/agents/:agent_id", get(use_agent))
         .route("/health", get(health))
         .layer(
             TraceLayer::new_for_http()

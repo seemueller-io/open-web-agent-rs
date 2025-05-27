@@ -22,7 +22,7 @@ lazy_static! {
     ));
 }
 
-pub async fn handle_webhooks(Path(agent_id): Path<String>) -> impl IntoResponse {
+pub async fn use_agent(Path(agent_id): Path<String>) -> impl IntoResponse {
     let db = DB.lock().await;
     match db.get(&agent_id) {
         Ok(Some(data)) => {
@@ -194,7 +194,7 @@ struct WebhookPostResponse {
     stream_url: String,
 }
 
-pub async fn handle_webhooks_post(Json(payload): Json<WebhookPostRequest>) -> impl IntoResponse {
+pub async fn create_agent(Json(payload): Json<WebhookPostRequest>) -> impl IntoResponse {
     let db = DB.lock().await;
 
     tracing::info!("Received webhook post request with ID: {}", payload.id);

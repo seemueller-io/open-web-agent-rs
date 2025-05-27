@@ -38,7 +38,7 @@
     <script>
         async function sendRequest() {
             const input = document.getElementById('userInput').value;
-            const response = await fetch(`/api/webhooks?resource=web-search&input=${encodeURIComponent(input)}`);
+            const response = await fetch(`/api/agents?resource=web-search&input=${encodeURIComponent(input)}`);
             const reader = response.body.getReader();
             const decoder = new TextDecoder('utf-8');
             let result = '';
