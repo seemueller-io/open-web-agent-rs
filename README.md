@@ -5,37 +5,56 @@ Remote genaiscript host for integration into conversational AI applications.
 
 ## Quickstart
 ```bash
-git clone <repo-url>
+git clone https://github.com/seemueller-io/open-web-agent-rs.git
 bun i
 bun run build
 bun dev
 ```
 
-```javascript
-#!/usr/bin/env node
+```typescript
+#!/usr/bin/env deno -A
 
-(async () => {
-    const url = "http://localhost:3006"
-    const createAgentRequestParams = {
-        
-    };
-    
-    const createAgentRequest = fetch(url, {
-        method: "POST",
-        body: JSON.stringify(createAgentRequestParams)
-    });
-    
-    const {streamId} = await createAgentRequest.json();
-    
-    
-    const streamUrl = new URL(url);
-    streamUrl.pathname = streamId;
-    const eventsource = new EventSource(streamUrl)
-    
-    eventsource.onmessage = (event) => {
-        console.log(JSON.stringify(event))
-    }
-})
+const API_ROOT = "http://localhost:3006";
+
+const sid = crypto.randomUUID();
+// -------------------- 1.  Create the agent --------------------
+const createAgentBody = {
+    id: sid,
+    resource: "web-search",
+    parent: sid,
+    payload: { input: "Who won the 2024 election in the US?" },
+};
+
+const createRes = await fetch(`${API_ROOT}/api/agents`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(createAgentBody),
+});
+
+
+const raw = await createRes.text();
+console.log({raw});
+const {stream_url: streamId} = JSON.parse(raw);
+
+console.log("Agent created with streamId:", streamId);
+
+// -------------------- 2.  Listen to the SSE stream --------------------
+const streamUrl = `${API_ROOT}${streamId}`;
+const es = new EventSource(streamUrl);
+
+
+es.onopen = (e) => {
+    console.log("connected", e);
+};
+
+es.onmessage = (e) => {
+    console.log("⟶", e.data);
+};
+
+es.onerror = (e) => {
+    console.error("SSE error:", e);
+    es.close();
+};
 ```
 
 ### Disclaimer
