@@ -1,7 +1,7 @@
 use crate::utils::utils::run_agent;
 use tokio::process::Child;
 
-pub async fn image_generator(stream_id: &str, input: &str) -> Result<Child, String> {
+pub async fn agent(stream_id: &str, input: &str) -> Result<Child, String> {
     tracing::debug!(
                 "Running image generator, \ninput: {}",
                 input
