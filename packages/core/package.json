@@ -1,9 +1,0 @@
-{
-  "name": "@web-agent-rs/core",
-  "version": "1.0.0",
-  "type": "module",
-  "dependencies": {
-    "mobx-state-tree": "^7.0.2",
-    "@web-agent-rs/perigon": "workspace:*"
-  }
-}
