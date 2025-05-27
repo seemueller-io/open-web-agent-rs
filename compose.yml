@@ -2,7 +2,8 @@ services:
   agent-server:
     build:
       context: .
-      dockerfile: Local.Dockerfile
+      dockerfile: Local.Dockerfile # use for arm64,
+#      dockerfile: Remote.Dockerfile # use for x86,
     ports:
       - "3006:3006"
     environment:
