@@ -6,9 +6,11 @@ Remote genaiscript host for integration into conversational AI applications.
 ## Quickstart
 ```bash
 git clone https://github.com/seemueller-io/open-web-agent-rs.git
+sed -i '' '/^OPENAI_API_KEY=/d' .env; echo 'OPENAI_API_KEY=your-own-api-key' >> .env
 bun i
 bun run build
 bun dev
+docker compose start searxng
 ```
 
 ```typescript
