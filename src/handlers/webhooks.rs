@@ -27,9 +27,9 @@ lazy_static! {
     ));
 }
 
-pub async fn handle_webhooks(Path(stream_id): Path<String>) -> impl IntoResponse {
+pub async fn handle_webhooks(Path(agent_id): Path<String>) -> impl IntoResponse {
     let db = DB.lock().await;
-    match db.get(&stream_id) {
+    match db.get(&agent_id) {
         Ok(Some(data)) => {
 
             let mut info: StreamInfo = match serde_json::from_slice(&data) {
@@ -51,7 +51,7 @@ pub async fn handle_webhooks(Path(stream_id): Path<String>) -> impl IntoResponse
                 }
             };
 
-            match db.insert(&stream_id, updated_info_bytes) {
+            match db.insert(&agent_id, updated_info_bytes) {
                 Ok(_) => {
                     if let Err(e) = db.flush_async().await {
                         tracing::error!("Failed to persist updated call_count to the database: {}", e);
@@ -64,7 +64,7 @@ pub async fn handle_webhooks(Path(stream_id): Path<String>) -> impl IntoResponse
                 }
             };
 
-            let info: StreamInfo = match db.get(&stream_id) {
+            let info: StreamInfo = match db.get(&agent_id) {
                 Ok(Some(updated_data)) => match serde_json::from_slice(&updated_data) {
                     Ok(info) => info,
                     Err(e) => {
@@ -73,7 +73,7 @@ pub async fn handle_webhooks(Path(stream_id): Path<String>) -> impl IntoResponse
                     }
                 },
                 Ok(None) => {
-                    tracing::error!("Stream ID not found after update: {}", stream_id);
+                    tracing::error!("Stream ID not found after update: {}", agent_id);
                     return StatusCode::NOT_FOUND.into_response();
                 }
                 Err(e) => {
@@ -92,14 +92,14 @@ pub async fn handle_webhooks(Path(stream_id): Path<String>) -> impl IntoResponse
             tracing::debug!(
                 "Processing webhook - Resource: {}, Stream ID: {}",
                 resource,
-                stream_id
+                agent_id
             );
             
             let cmd = match resource.as_str() {
-                "web-search" => search_agent(stream_id.as_str(), &*input).await,
-                "news-search" => news_agent(stream_id.as_str(), &*input).await,
-                "image-generator" => image_generator(stream_id.as_str(), &*input).await,
-                "web-scrape" => scrape_agent(stream_id.as_str(), &*input).await,
+                "web-search" => search_agent(agent_id.as_str(), &*input).await,
+                "news-search" => news_agent(agent_id.as_str(), &*input).await,
+                "image-generator" => image_generator(agent_id.as_str(), &*input).await,
+                "web-scrape" => scrape_agent(agent_id.as_str(), &*input).await,
                 _ => {
                     tracing::error!("Unsupported resource type: {}", resource);
                     return StatusCode::BAD_REQUEST.into_response();
@@ -123,7 +123,7 @@ pub async fn handle_webhooks(Path(stream_id): Path<String>) -> impl IntoResponse
             };
 
             let reader = BufReader::new(stdout);
-            let sse_stream = reader_to_stream(reader, stream_id.clone());
+            let sse_stream = reader_to_stream(reader, agent_id.clone());
 
             return Response::builder()
                 .header("Content-Type", "text/event-stream")
@@ -134,7 +134,7 @@ pub async fn handle_webhooks(Path(stream_id): Path<String>) -> impl IntoResponse
                 .unwrap()
         }
         Ok(None) => {
-            tracing::error!("Stream ID not found: {}", stream_id);
+            tracing::error!("Stream ID not found: {}", agent_id);
             StatusCode::NOT_FOUND.into_response()
         }
         Err(e) => {
