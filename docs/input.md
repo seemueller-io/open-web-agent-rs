@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document explains how input works for agents in the web-agent-rs project. Understanding how input is processed is essential for creating effective agents and integrating them with client applications.
+This document explains how input works for agents in the open-web-agent-rs project. Understanding how input is processed is essential for creating effective agents and integrating them with client applications.
 
 ## Input Flow
 

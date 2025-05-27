@@ -1,6 +1,6 @@
-# web-agent-rs Documentation
+# open-web-agent-rs Documentation
 
-Welcome to the documentation for web-agent-rs, a GenAIScript host for integration into conversational AI applications.
+Welcome to the documentation for open-web-agent-rs, a GenAIScript host for integration into conversational AI applications.
 
 ## Table of Contents
 
@@ -12,7 +12,7 @@ Welcome to the documentation for web-agent-rs, a GenAIScript host for integratio
 
 ## Overview
 
-web-agent-rs is a server that hosts GenAIScript agents for integration into conversational AI applications. It provides a simple API for creating and consuming stream resources that execute various agents to perform tasks like web search, news search, image generation, and web scraping.
+open-web-agent-rs is a server that hosts GenAIScript agents for integration into conversational AI applications. It provides a simple API for creating and consuming stream resources that execute various agents to perform tasks like web search, news search, image generation, and web scraping.
 
 ## Architecture
 
@@ -28,7 +28,7 @@ The application is built with Rust using the Axum web framework. It uses GenAISc
 
 ## Getting Started
 
-To get started with web-agent-rs, follow these steps:
+To get started with open-web-agent-rs, follow these steps:
 
 1. Read the [Installation Guide](./installation.md) to set up the project
 2. Configure the application using the [Configuration Guide](./configuration.md)
@@ -42,4 +42,4 @@ Please note that this project has not undergone a formal security assessment. Yo
 
 ## Contributing
 
-Contributions to web-agent-rs are welcome! Please feel free to submit issues and pull requests to improve the project.
+Contributions to open-web-agent-rs are welcome! Please feel free to submit issues and pull requests to improve the project.

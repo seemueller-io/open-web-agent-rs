@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the token-based authentication system used in web-agent-rs. The system uses FIPS204 signatures to
+This document outlines the token-based authentication system used in open-web-agent-rs. The system uses FIPS204 signatures to
 generate secure session tokens containing user data.
 
 ## Core Components

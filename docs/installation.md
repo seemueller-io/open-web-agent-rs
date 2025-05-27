@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-Before installing web-agent-rs, ensure you have the following prerequisites:
+Before installing open-open-web-agent-rs, ensure you have the following prerequisites:
 
 - [Rust](https://www.rust-lang.org/tools/install) (latest stable version)
 - [Node.js](https://nodejs.org/) (for GenAIScript)
@@ -52,12 +52,12 @@ You can also run the application using Docker:
 
 1. Build the Docker image:
    ```bash
-   docker build -t web-agent-rs -f Dockerfile .
+   docker build -t open-web-agent-rs -f <Local|Remote>.Dockerfile .
    ```
 
 2. Run the container:
    ```bash
-   docker run -p 3006:3006 --env-file .env web-agent-rs
+   docker run -p 3006:3006 --env-file .env open-web-agent-rs
    ```
 
 Alternatively, you can use Docker Compose:

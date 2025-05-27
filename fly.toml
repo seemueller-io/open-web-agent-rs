@@ -1,4 +1,4 @@
-app = "web-agent-rs"
+app = "open-web-agent-rs"
 primary_region = "iad"
 
 [deploy]
