@@ -18,6 +18,7 @@ pub fn create_router() -> Router {
                 .make_span_with(trace::DefaultMakeSpan::new().level(Level::INFO))
                 .on_response(trace::DefaultOnResponse::new().level(Level::INFO)),
         )
+        .layer(tower_http::cors::CorsLayer::very_permissive())
         .fallback(handle_not_found)
 }
 
