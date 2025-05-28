@@ -97,6 +97,9 @@ pub async fn use_agent(Path(agent_id): Path<String>) -> impl IntoResponse {
                 "image-generator" => {
                     crate::agents::image_generator::agent(agent_id.as_str(), &*input).await
                 }
+                "deep-research" => {
+                    crate::agents::deep_research::agent(agent_id.as_str(), &*input).await
+                }
                 "web-scrape" => crate::agents::scrape::agent(agent_id.as_str(), &*input).await,
                 _ => {
                     tracing::error!("Unsupported resource type: {}", resource);
