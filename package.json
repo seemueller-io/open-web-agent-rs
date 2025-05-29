@@ -6,6 +6,7 @@
   ],
   "private": true,
   "scripts": {
+    "clean": "rm -rf .genaiscript && rm -rf dist && rm -rf node_modules && rm -rf open-web-agent-rs && rm -rf target && rm -rf packages/genaiscript-rust-shim/dist",
     "dev": "./killport.js 3006 && bun run build && cargo watch -x 'run src/main.rs'",
     "start": "docker compose up --build",
     "ai:search": "genaiscript run packages/genaiscript/genaisrc/web-search.genai.mts --vars USER_INPUT='who won the 2024 election?'",
