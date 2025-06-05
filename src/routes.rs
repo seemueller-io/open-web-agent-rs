@@ -6,26 +6,18 @@ use tracing::Level;
 use rmcp::transport::streamable_http_server::{
     StreamableHttpService, session::local::LocalSessionManager,
 };
-use crate::counter::Counter;
 use crate::agents::Agents;
 
 pub fn create_router() -> Router {
 
-    let counter_service = StreamableHttpService::new(
-        Counter::new,
-        LocalSessionManager::default().into(),
-        Default::default(),
-    );
-
-    let agents_service = StreamableHttpService::new(
+    let mcp_service = StreamableHttpService::new(
         Agents::new,
         LocalSessionManager::default().into(),
         Default::default(),
     );
 
     Router::new()
-        .nest_service("/mcp/counter", counter_service)
-        .nest_service("/mcp/agents", agents_service)
+        .nest_service("/mcp", mcp_service)
         .route("/", get(serve_ui))
         .route("/health", get(health))
         .layer(
@@ -39,4 +31,72 @@ pub fn create_router() -> Router {
 
 async fn health() -> String {
     return "ok".to_string();
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use axum::body::{Body, Bytes};
+    use axum::http::{Request, StatusCode};
+    use axum::response::Response;
+    use tower::ServiceExt;
+
+    #[tokio::test]
+    async fn test_health_endpoint() {
+        // Call the health function directly
+        let response = health().await;
+        assert_eq!(response, "ok".to_string());
+    }
+
+    #[tokio::test]
+    async fn test_health_route() {
+        // Create the router
+        let app = create_router();
+
+        // Create a request to the health endpoint
+        let request = Request::builder()
+            .uri("/health")
+            .method("GET")
+            .body(Body::empty())
+            .unwrap();
+
+        // Process the request
+        let response = app.oneshot(request).await.unwrap();
+
+        // Check the response status
+        assert_eq!(response.status(), StatusCode::OK);
+
+        // Check the response body
+        let body = response_body_bytes(response).await;
+        assert_eq!(&body[..], b"ok");
+    }
+
+    #[tokio::test]
+    async fn test_not_found_route() {
+        // Create the router
+        let app = create_router();
+
+        // Create a request to a non-existent endpoint
+        let request = Request::builder()
+            .uri("/non-existent")
+            .method("GET")
+            .body(Body::empty())
+            .unwrap();
+
+        // Process the request
+        let response = app.oneshot(request).await.unwrap();
+
+        // Check the response status
+        assert_eq!(response.status(), StatusCode::NOT_FOUND);
+    }
+
+    // Helper function to extract bytes from a response body
+    async fn response_body_bytes(response: Response) -> Bytes {
+        let body = response.into_body();
+        // Use a reasonable size limit for the body (16MB)
+        let bytes = axum::body::to_bytes(body, 16 * 1024 * 1024)
+            .await
+            .expect("Failed to read response body");
+        bytes
+    }
 }
