@@ -1,12 +1,48 @@
+use axum::response::Response;
 use crate::handlers::{not_found::handle_not_found, ui::serve_ui};
 use axum::routing::{get, Router};
+use http::StatusCode;
 use tower_http::trace::{self, TraceLayer};
 use tracing::Level;
 
 use rmcp::transport::streamable_http_server::{
     StreamableHttpService, session::local::LocalSessionManager,
 };
+use rust_embed::Embed;
 use crate::agents::Agents;
+
+
+#[derive(Embed)]
+#[folder = "./node_modules/@modelcontextprotocol/inspector-client/dist"]
+struct Asset;
+
+pub struct StaticFile<T>(pub T);
+
+impl<T> axum::response::IntoResponse for StaticFile<T>
+where
+    T: Into<String>,
+{
+    fn into_response(self) -> Response {
+        let path = self.0.into();
+
+        match Asset::get(path.as_str()) {
+            Some(content) => {
+                let mime = mime_guess::from_path(path).first_or_octet_stream();
+                ([(http::header::CONTENT_TYPE, mime.as_ref())], content.data).into_response()
+            }
+            None => (StatusCode::NOT_FOUND, "404 Not Found").into_response(),
+        }
+    }
+}
+
+async fn ui_index_handler() -> impl axum::response::IntoResponse {
+    StaticFile("index.html")
+}
+
+async fn static_handler(uri: http::Uri) -> impl axum::response::IntoResponse {
+    let path = uri.path().trim_start_matches("/").to_string();
+    StaticFile(path)
+}
 
 pub fn create_router() -> Router {
 
@@ -18,8 +54,10 @@ pub fn create_router() -> Router {
 
     Router::new()
         .nest_service("/mcp", mcp_service)
-        .route("/", get(serve_ui))
         .route("/health", get(health))
+        .route("/", get(ui_index_handler))
+        .route("/index.html", get(ui_index_handler))
+        .route("/{*path}", get(static_handler))
         .layer(
             TraceLayer::new_for_http()
                 .make_span_with(trace::DefaultMakeSpan::new().level(Level::INFO))
