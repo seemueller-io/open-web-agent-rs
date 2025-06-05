@@ -1,17 +1,25 @@
-use crate::handlers::agents::create_agent;
-use crate::handlers::{not_found::handle_not_found, ui::serve_ui, agents::use_agent};
-use axum::routing::post;
+use crate::handlers::{not_found::handle_not_found, ui::serve_ui};
 use axum::routing::{get, Router};
 use tower_http::trace::{self, TraceLayer};
 use tracing::Level;
 
+use rmcp::transport::streamable_http_server::{
+    StreamableHttpService, session::local::LocalSessionManager,
+};
+use crate::counter::Counter;
+
 pub fn create_router() -> Router {
+
+    let service = StreamableHttpService::new(
+        Counter::new,
+        LocalSessionManager::default().into(),
+        Default::default(),
+    );
+    
+    
     Router::new()
+        .nest_service("/mcp", service)
         .route("/", get(serve_ui))
-        // create an agent
-        .route("/api/agents", post(create_agent))
-        // connect the agent
-        .route("/agents/:agent_id", get(use_agent))
         .route("/health", get(health))
         .layer(
             TraceLayer::new_for_http()
