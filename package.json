@@ -18,5 +18,8 @@
     "test-http": "test/test-search.ts",
     "mcp-inspector": "bunx @modelcontextprotocol/inspector",
     "build": "(cd packages/genaiscript-rust-shim && bun run buildShim && bun run setupDev && cargo build)"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/inspector": "^0.14.0"
   }
 }

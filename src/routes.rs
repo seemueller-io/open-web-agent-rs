@@ -7,18 +7,25 @@ use rmcp::transport::streamable_http_server::{
     StreamableHttpService, session::local::LocalSessionManager,
 };
 use crate::counter::Counter;
+use crate::agents::Agents;
 
 pub fn create_router() -> Router {
 
-    let service = StreamableHttpService::new(
+    let counter_service = StreamableHttpService::new(
         Counter::new,
         LocalSessionManager::default().into(),
         Default::default(),
     );
-    
-    
+
+    let agents_service = StreamableHttpService::new(
+        Agents::new,
+        LocalSessionManager::default().into(),
+        Default::default(),
+    );
+
     Router::new()
-        .nest_service("/mcp", service)
+        .nest_service("/mcp/counter", counter_service)
+        .nest_service("/mcp/agents", agents_service)
         .route("/", get(serve_ui))
         .route("/health", get(health))
         .layer(
