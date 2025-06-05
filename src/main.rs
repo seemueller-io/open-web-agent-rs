@@ -8,6 +8,7 @@ mod setup;
 mod handlers;
 mod agents;
 mod utils;
+mod counter;
 
 #[tokio::main]
 async fn main() {
