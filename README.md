@@ -9,6 +9,27 @@ This project is organized as a Cargo workspace with the following crates:
 - `agent-server`: The main web agent server
 - `local_inference_engine`: An embedded OpenAI-compatible inference server for Gemma models
 
+## Acknowledgements
+
+Special gratitude and thanks expressed for:
+
+- The Rust community for their excellent tools and libraries
+- The Gemma team for making their models available
+- Open source projects that have inspired and enabled this work
+
+- **[axum](https://github.com/tokio-rs/axum)**: Web framework for building APIs
+- **[tokio](https://github.com/tokio-rs/tokio)**: Asynchronous runtime for efficient concurrency
+- **[serde](https://github.com/serde-rs/serde)**: Serialization/deserialization framework
+- **[rmcp](https://github.com/model-context-protocol/rmcp)**: Model Context Protocol SDK for agent communication
+- **[sled](https://github.com/spacejam/sled)**: Embedded database for persistent storage
+- **[tower-http](https://github.com/tower-rs/tower-http)**: HTTP middleware components
+- **[candle-core](https://github.com/huggingface/candle)**: ML framework for efficient tensor operations
+- **[candle-transformers](https://github.com/huggingface/candle/tree/main/candle-transformers)**: Implementation of
+  transformer models in Candle
+- **[hf-hub](https://github.com/huggingface/hf-hub)**: Client for downloading models from Hugging Face
+- **[tokenizers](https://github.com/huggingface/tokenizers)**: Fast text tokenization for ML models
+- **[safetensors](https://github.com/huggingface/safetensors)**: Secure format for storing tensors
+
 ## Architecture Diagram
 
 ```mermaid
