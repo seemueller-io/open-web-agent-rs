@@ -9,6 +9,77 @@ This project is organized as a Cargo workspace with the following crates:
 - `agent-server`: The main web agent server
 - `local_inference_engine`: An embedded OpenAI-compatible inference server for Gemma models
 
+## Architecture Diagram
+
+```mermaid
+%% High‑fidelity architecture diagram – client‑ready
+flowchart LR
+    %% ─────────────── Agent‑side ───────────────
+    subgraph AGENT_SERVER["Agent Server"]
+        direction TB
+        AS["Agent Server"]:::core -->|exposes| MCP[["Model Context Protocol API"]]:::api
+        AS -->|serves| UI["MCP Inspector UI"]:::ui
+
+        subgraph AGENTS["Agents"]
+            direction TB
+            A_SEARCH["Search Agent"] -->|uses| SEARX
+            A_NEWS["News Agent"]   -->|uses| SEARX
+            A_SCRAPE["Web Scrape Agent"] -->|uses| BROWSER
+            A_IMG["Image Generator Agent"]-->|uses| EXTERNAL_API
+            A_RESEARCH["Deep Research Agent"] -->|leverages| SEARX
+        end
+
+        %% Individual fan‑out lines (no “&”)
+        MCP -->|routes| A_SEARCH
+        MCP -->|routes| A_NEWS
+        MCP -->|routes| A_SCRAPE
+        MCP -->|routes| A_IMG
+        MCP -->|routes| A_RESEARCH
+    end
+
+    %% ─────────────── Local inference ───────────────
+    subgraph INFERENCE["Local Inference Engine"]
+        direction TB
+        LIE["Local Inference Engine"]:::core -->|loads| MODELS["Gemma Models"]:::model
+        LIE -->|exposes| OPENAI_API["OpenAI‑compatible API"]:::api
+        MODELS -->|runs on| ACCEL
+
+        subgraph ACCEL["Hardware Acceleration"]
+            direction LR
+            METAL[Metal]
+            CUDA[CUDA]
+            CPU[CPU]
+        end
+    end
+
+    %% ─────────────── External bits ───────────────
+    subgraph EXTERNAL["External Components"]
+        direction TB
+        SEARX["SearXNG Search"]:::ext
+        BROWSER["Chromium Browser"]:::ext
+        EXTERNAL_API["Public OpenAI API"]:::ext
+    end
+
+    %% ─────────────── Clients ───────────────
+    subgraph CLIENTS["Client Applications"]
+        CLIENT["MCP‑aware Apps"]:::client
+    end
+
+    %% ─────────────── Interactions ───────────────
+    CLIENT -- "HTTPS / WebSocket" --> MCP
+    AS --> |"may call"| OPENAI_API
+    AS --> |"optional"| EXTERNAL_API
+
+    %% ─────────────── Styling ───────────────
+    classDef core   fill:#A9CEF4,stroke:#36494E,stroke-width:2px,color:#000;
+    classDef api    fill:#7EA0B7,stroke:#36494E,stroke-width:2px,color:#000;
+    classDef ui     fill:#A9CEF4,stroke:#597081,stroke-dasharray:4 3,color:#000;
+    classDef model  fill:#A9CEF4,stroke:#36494E,stroke-width:2px,color:#000;
+    classDef ext    fill:#B5D999,stroke:#36494E,stroke-width:2px,color:#000;
+    classDef client fill:#FFE69A,stroke:#36494E,stroke-width:2px,color:#000;
+
+```
+
 ## Setup
 
 1. Clone the repository
