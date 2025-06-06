@@ -18,6 +18,7 @@ Special gratitude and thanks:
 - Google's [Gemma](https://deepmind.google/models/gemma) team for [gemma-3-1b-it](https://huggingface.co/google/gemma-3-1b-it)
 
 ### Open source projects that have inspired and enabled this work
+- **[GenAIScript](https://github.com/microsoft/genaiscript)**: Automatable GenAI Scripting
 - **[axum](https://github.com/tokio-rs/axum)**: Web framework for building APIs
 - **[tokio](https://github.com/tokio-rs/tokio)**: Asynchronous runtime for efficient concurrency
 - **[serde](https://github.com/serde-rs/serde)**: Serialization/deserialization framework
