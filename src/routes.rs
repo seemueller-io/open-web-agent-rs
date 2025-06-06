@@ -1,5 +1,5 @@
 use axum::response::Response;
-use crate::handlers::{not_found::handle_not_found, ui::serve_ui};
+use crate::handlers::{not_found::handle_not_found};
 use axum::routing::{get, Router};
 use http::StatusCode;
 use tower_http::trace::{self, TraceLayer};
