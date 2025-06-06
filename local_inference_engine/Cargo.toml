@@ -27,7 +27,7 @@ safetensors = { version = "0.4.1" }
 serde = { version = "1.0.171", features = ["derive"] }
 serde_json = { version = "1.0.99" }
 symphonia = { version = "0.5.3", features = ["all"], optional = true }
-tokenizers = { version = "0.21.0", default-features = false, features = ["onig"] }
+tokenizers = { version = "0.21.0", default-features = false, features = ["onig", "http"] }
 cpal = { version = "0.15.2", optional = true }
 pdf2image = { version = "0.1.2" , optional = true}
 candle-core = { version = "=0.9.1", features = ["metal"] }
@@ -43,6 +43,7 @@ tokio = { version = "1.43.0", features = ["full"] }
 either = { version = "1.9.0", features = ["serde"] }
 utoipa = { version = "4.2.0", features = ["axum_extras"] }
 uuid = { version = "1.7.0", features = ["v4"] }
+reborrow = "0.5.5"
 
 
 [dev-dependencies]
