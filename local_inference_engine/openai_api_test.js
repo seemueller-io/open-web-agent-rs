@@ -6,7 +6,7 @@
 (async function testBasicChatCompletion() {
   console.log("Test 1: Basic chat completion request");
   try {
-    const response = await fetch('http://localhost:3000/v1/chat/completions', {
+    const response = await fetch('http://localhost:3777/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,7 +34,7 @@
 (async function testMultiTurnConversation() {
   console.log("\nTest 2: Multi-turn conversation");
   try {
-    const response = await fetch('http://localhost:3000/v1/chat/completions', {
+    const response = await fetch('http://localhost:3777/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -74,7 +74,7 @@
 (async function testTemperatureAndTopP() {
   console.log("\nTest 3: Request with temperature and top_p parameters");
   try {
-    const response = await fetch('http://localhost:3000/v1/chat/completions', {
+    const response = await fetch('http://localhost:3777/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -104,7 +104,7 @@
 (async function testStreaming() {
   console.log("\nTest 4: Request with streaming enabled");
   try {
-    const response = await fetch('http://localhost:3000/v1/chat/completions', {
+    const response = await fetch('http://localhost:3777/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -148,7 +148,7 @@
 (async function testDifferentModel() {
   console.log("\nTest 5: Request with a different model");
   try {
-    const response = await fetch('http://localhost:3000/v1/chat/completions', {
+    const response = await fetch('http://localhost:3777/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -47,7 +47,7 @@ const {text} = await host.fetchText(new URL(url).toString());
 //     browser: getBrowser(),
 //     headless: true,
 //     javaScriptEnabled: browser !== "chromium",
-//     // timeout: 3000,
+//     // timeout: 3777,
 //     // bypassCSP: true,
 //     // baseUrl: new URL(url).origin,
 // });

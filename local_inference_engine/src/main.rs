@@ -652,7 +652,7 @@ struct Args {
     server: bool,
 
     /// Port to use for the server
-    #[arg(long, default_value_t = 3000)]
+    #[arg(long, default_value_t = 3777)]
     port: u16,
 
     /// Prompt for text generation (not used in server mode)

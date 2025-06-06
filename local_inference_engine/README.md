@@ -63,15 +63,15 @@ cargo run --release -- --prompt "Your prompt text here" --which 3-1b-it
 Run the inference engine in server mode to expose an OpenAI-compatible API:
 
 ```bash
-cargo run --release -- --server --port 3000 --which 3-1b-it
+cargo run --release -- --server --port 3777 --which 3-1b-it
 ```
 
-This starts a web server on the specified port (default: 3000) with an OpenAI-compatible chat completions endpoint.
+This starts a web server on the specified port (default: 3777) with an OpenAI-compatible chat completions endpoint.
 
 #### Server Options
 
 - `--server`: Run in server mode
-- `--port <INT>`: Port to use for the server (default: 3000)
+- `--port <INT>`: Port to use for the server (default: 3777)
 - `--which <MODEL>`: Model variant to use (default: "3-1b-it")
 - Other model options as described in CLI mode
 
@@ -130,7 +130,7 @@ POST /v1/chat/completions
 ### Example: Using cURL
 
 ```bash
-curl -X POST http://localhost:3000/v1/chat/completions \
+curl -X POST http://localhost:3777/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
     "model": "gemma-3-1b-it",
@@ -148,7 +148,7 @@ curl -X POST http://localhost:3000/v1/chat/completions \
 from openai import OpenAI
 
 client = OpenAI(
-    base_url="http://localhost:3000/v1",
+    base_url="http://localhost:3777/v1",
     api_key="dummy"  # API key is not validated but required by the client
 )
 
@@ -170,7 +170,7 @@ print(response.choices[0].message.content)
 import OpenAI from 'openai';
 
 const openai = new OpenAI({
-  baseURL: 'http://localhost:3000/v1',
+  baseURL: 'http://localhost:3777/v1',
   apiKey: 'dummy', // API key is not validated but required by the client
 });
 
