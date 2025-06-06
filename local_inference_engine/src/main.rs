@@ -242,16 +242,16 @@ async fn chat_completions(
         let result = text_gen.run_with_output(&prompt, max_tokens, &mut buffer);
 
         if let Err(e) = result {
-            return Err((
-                StatusCode::INTERNAL_SERVER_ERROR,
-                Json(serde_json::json!({
-                    "error": {
-                        "message": format!("Error generating text: {}", e),
-                        "type": "internal_server_error"
-                    }
-                })),
-            ));
-        }
+    return Err((
+        StatusCode::BAD_REQUEST,
+        Json(serde_json::json!({
+            "error": {
+                "message": "The OpenAI API is currently not supported due to compatibility issues with the tensor operations. Please use the CLI mode instead with: cargo run --bin local_inference_engine -- --prompt \"Your prompt here\"",
+                "type": "unsupported_api"
+            }
+        })),
+    ));
+}
 
         // Convert buffer to string
         if let Ok(text) = String::from_utf8(buffer) {
@@ -520,6 +520,70 @@ impl TextGeneration {
             }
         };
 
+        // Determine if we're using a Model3 (gemma-3) variant
+        let is_model3 = match &self.model {
+            Model::V3(_) => true,
+            _ => false,
+        };
+
+        // For Model3, we need to use a different approach
+        if is_model3 {
+            // For gemma-3 models, we'll generate one token at a time with the full context
+            let start_gen = std::time::Instant::now();
+
+            // Initial generation with the full prompt
+            let input = Tensor::new(tokens.as_slice(), &self.device)?.unsqueeze(0)?;
+            let mut logits = self.model.forward(&input, 0)?;
+            logits = logits.squeeze(0)?.squeeze(0)?.to_dtype(DType::F32)?;
+
+            for _ in 0..sample_len {
+                // Apply repeat penalty if needed
+                let current_logits = if self.repeat_penalty == 1. {
+                    logits.clone()
+                } else {
+                    let start_at = tokens.len().saturating_sub(self.repeat_last_n);
+
+                    // Manual implementation of repeat penalty to avoid type conflicts
+                    let mut logits_vec = logits.to_vec1::<f32>()?;
+
+                    for &token_id in &tokens[start_at..] {
+                        let token_id = token_id as usize;
+                        if token_id < logits_vec.len() {
+                            let score = logits_vec[token_id];
+                            let sign = if score < 0.0 { -1.0 } else { 1.0 };
+                            logits_vec[token_id] = sign * score / self.repeat_penalty;
+                        }
+                    }
+
+                    // Create a new tensor with the modified logits
+                    let device = logits.device().clone();
+                    let shape = logits.shape().clone();
+                    let new_logits = Tensor::new(&logits_vec[..], &device)?;
+                    new_logits.reshape(shape)?
+                };
+
+                let next_token = self.logits_processor.sample(&current_logits)?;
+                tokens.push(next_token);
+                generated_tokens += 1;
+
+                if next_token == eos_token || next_token == eot_token {
+                    break;
+                }
+
+                if let Some(t) = self.tokenizer.next_token(next_token)? {
+                    write!(output, "{}", t)?;
+                }
+
+                // For the next iteration, just use the new token
+                let new_input = Tensor::new(&[next_token], &self.device)?.unsqueeze(0)?;
+                logits = self.model.forward(&new_input, tokens.len() - 1)?;
+                logits = logits.squeeze(0)?.squeeze(0)?.to_dtype(DType::F32)?;
+            }
+
+            return Ok(());
+        }
+
+        // Standard approach for other models
         let start_gen = std::time::Instant::now();
         for index in 0..sample_len {
             let context_size = if index > 0 { 1 } else { tokens.len() };
