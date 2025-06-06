@@ -11,12 +11,13 @@ This project is organized as a Cargo workspace with the following crates:
 
 ## Acknowledgements
 
-Special gratitude and thanks expressed for:
+Special gratitude and thanks:
 
-- The Rust community for their excellent tools and libraries
-- The Gemma team for making their models available
-- Open source projects that have inspired and enabled this work
+- [OpenAI](https://openai.com): For standards that offer consensus in chaos.
+- The [Rust](https://www.rust-lang.org) community for their excellent tools and libraries
+- Google's [Gemma](https://deepmind.google/models/gemma) team for [gemma-3-1b-it](https://huggingface.co/google/gemma-3-1b-it)
 
+### Open source projects that have inspired and enabled this work
 - **[axum](https://github.com/tokio-rs/axum)**: Web framework for building APIs
 - **[tokio](https://github.com/tokio-rs/tokio)**: Asynchronous runtime for efficient concurrency
 - **[serde](https://github.com/serde-rs/serde)**: Serialization/deserialization framework
