@@ -30,8 +30,7 @@ A Rust-based inference engine for running large language models locally. This to
 
 2. Build the local inference engine:
    ```bash
-   cd local_inference_engine
-   cargo build --release
+   cargo build -p local_inference_engine --release
    ```
 
 ## Usage
@@ -41,7 +40,7 @@ A Rust-based inference engine for running large language models locally. This to
 Run the inference engine in CLI mode to generate text directly:
 
 ```bash
-cargo run --release -- --prompt "Your prompt text here" --which 3-1b-it
+cargo run -p local_inference_engine --release -- --prompt "Your prompt text here" --which 3-1b-it
 ```
 
 #### CLI Options
@@ -63,7 +62,7 @@ cargo run --release -- --prompt "Your prompt text here" --which 3-1b-it
 Run the inference engine in server mode to expose an OpenAI-compatible API:
 
 ```bash
-cargo run --release -- --server --port 3777 --which 3-1b-it
+cargo run -p local_inference_engine --release -- --server --port 3777 --which 3-1b-it
 ```
 
 This starts a web server on the specified port (default: 3777) with an OpenAI-compatible chat completions endpoint.

@@ -13,7 +13,7 @@ use crate::agents::Agents;
 
 
 #[derive(Embed)]
-#[folder = "./node_modules/@modelcontextprotocol/inspector-client/dist"]
+#[folder = "../../node_modules/@modelcontextprotocol/inspector-client/dist"]
 struct Asset;
 
 pub struct StaticFile<T>(pub T);

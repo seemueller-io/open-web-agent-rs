@@ -14,11 +14,11 @@ RUN rustup target add x86_64-unknown-linux-musl
 
 # Copy only necessary files for building
 COPY Cargo.toml Cargo.lock ./
-COPY src ./src
+COPY crates ./crates
 COPY assets ./assets
 
 # Build with musl target for static linking
-RUN cargo build --release --target x86_64-unknown-linux-musl && \
+RUN cargo build -p agent-server --release --target x86_64-unknown-linux-musl && \
     strip /build-context/target/x86_64-unknown-linux-musl/release/agent-server
 
 # Stage 2: Build Bun dependencies
