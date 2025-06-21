@@ -1,11 +1,8 @@
-use local_inference_engine::text_generation::TextGeneration;
-use local_inference_engine::model::{Model, Which};
-use local_inference_engine::token_output_stream::TokenOutputStream;
-use tokenizers::Tokenizer;
-use candle_core::{DType, Device, Tensor};
-use candle_transformers::generation::LogitsProcessor;
 use anyhow::Result;
-use std::sync::Arc;
+use candle_transformers::generation::LogitsProcessor;
+use inference_engine::model::Which;
+use inference_engine::token_output_stream::TokenOutputStream;
+use tokenizers::Tokenizer;
 
 #[cfg(test)]
 mod tests {

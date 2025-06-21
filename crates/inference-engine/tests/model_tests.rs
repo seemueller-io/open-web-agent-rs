@@ -1,4 +1,4 @@
-use local_inference_engine::model::{Model, Which};
+use inference_engine::model::{Model, Which};
 
 #[cfg(test)]
 mod tests {

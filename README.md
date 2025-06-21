@@ -1,13 +1,17 @@
 # open-web-agent-rs
 
-A Rust-based web agent with an embedded OpenAI-compatible inference server (supports Gemma models only).
+A Rust-based web agent with an embedded OpenAI-compatible inference server (supports Gemma models only). It is packaged and deployed as a container.
 
 ## Project Structure
 
 This project is organized as a Cargo workspace with the following crates:
 
-- `agent-server`: The main web agent server
-- `local_inference_engine`: An embedded OpenAI-compatible inference server for Gemma models
+- `crates`
+  - [agent-server](crates/agent-server): The main web agent server
+  - [inference-engine](crates/inference-engine): An embedded OpenAI-compatible inference server for Gemma models
+- `packages`
+  - [genaiscript](packages/genaiscript): GenaiScript scripts  
+  - [genaiscript-rust-shim](packages/genaiscript-rust-shim): An embedded OpenAI-compatible inference server for Gemma models
 
 ## Acknowledgements
 
@@ -61,9 +65,9 @@ flowchart LR
     end
 
     %% ─────────────── Local inference ───────────────
-    subgraph INFERENCE["Local Inference Engine"]
+    subgraph INFERENCE["Inference Engine"]
         direction TB
-        LIE["Local Inference Engine"]:::core -->|loads| MODELS["Gemma Models"]:::model
+        LIE["Inference Engine"]:::core -->|loads| MODELS["Gemma Models"]:::model
         LIE -->|exposes| OPENAI_API["OpenAI‑compatible API"]:::api
         MODELS -->|runs on| ACCEL
 
@@ -121,12 +125,12 @@ flowchart LR
 
 ## Running the Project
 
-### Local Inference Engine
+### Inference Engine
 
 To run the local inference engine:
 
 ```bash
-cd crates/local_inference_engine
+cd crates/inference-engine
 cargo run --release -- --server
 ```
 
@@ -159,5 +163,5 @@ To build a specific crate:
 ```bash
 cargo build -p agent-server
 # or
-cargo build -p local_inference_engine
+cargo build -p inference-engine
 ```

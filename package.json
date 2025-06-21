@@ -7,6 +7,8 @@
   "private": true,
   "scripts": {
     "clean": "rm -rf .genaiscript && rm -rf dist && rm -rf node_modules && rm -rf open-web-agent-rs && rm -rf target && rm -rf packages/genaiscript-rust-shim/dist",
+    "build": "(cd packages/genaiscript-rust-shim && bun run buildShim && bun run setupDev && cargo build -p agent-server)",
+    "mcp-inspector": "bunx @modelcontextprotocol/inspector",
     "dev": "bun i && ./killport.js 3006 && bun run build && cargo watch -x 'run -p agent-server'",
     "start": "docker compose up --build",
     "ai:search": "genaiscript run packages/genaiscript/genaisrc/web-search.genai.mts --vars USER_INPUT='who won the 2024 election?'",
@@ -16,8 +18,6 @@
     "ai:url:scrape": "npx genaiscript run packages/genaiscript/genaisrc/web-scrape.genai.mts --vars USER_INPUT='{\"url\":\"https://www.time4learning.com/homeschool-curriculum/high-school/eleventh-grade/math.html\",\"query\":\"What is on this page?\", \"action\": \"scrape\"}'",
     "prod:logs": "fly logs",
     "test-http": "test/test-search.ts",
-    "mcp-inspector": "bunx @modelcontextprotocol/inspector",
-    "build": "(cd packages/genaiscript-rust-shim && bun run buildShim && bun run setupDev && cargo build -p agent-server)"
   },
   "dependencies": {
     "@modelcontextprotocol/inspector": "^0.14.0"

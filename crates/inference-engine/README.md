@@ -1,4 +1,4 @@
-# Local Inference Engine
+# @open-web-agent-rs/inference-engine
 
 A Rust-based inference engine for running large language models locally. This tool supports both CLI mode for direct text generation and server mode with an OpenAI-compatible API.
 
@@ -30,7 +30,7 @@ A Rust-based inference engine for running large language models locally. This to
 
 2. Build the local inference engine:
    ```bash
-   cargo build -p local_inference_engine --release
+   cargo build -p inference-engine --release
    ```
 
 ## Usage
@@ -40,7 +40,7 @@ A Rust-based inference engine for running large language models locally. This to
 Run the inference engine in CLI mode to generate text directly:
 
 ```bash
-cargo run -p local_inference_engine --release -- --prompt "Your prompt text here" --which 3-1b-it
+cargo run -p inference-engine --release -- --prompt "Your prompt text here" --which 3-1b-it
 ```
 
 #### CLI Options
@@ -62,7 +62,7 @@ cargo run -p local_inference_engine --release -- --prompt "Your prompt text here
 Run the inference engine in server mode to expose an OpenAI-compatible API:
 
 ```bash
-cargo run -p local_inference_engine --release -- --server --port 3777 --which 3-1b-it
+cargo run -p inference-engine --release -- --server --port 3777 --which 3-1b-it
 ```
 
 This starts a web server on the specified port (default: 3777) with an OpenAI-compatible chat completions endpoint.

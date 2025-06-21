@@ -1,7 +1,7 @@
 [workspace]
 members = [
     "crates/agent-server",
-    "crates/local_inference_engine",
+    "crates/inference-engine",
 ]
 
 resolver = "2"

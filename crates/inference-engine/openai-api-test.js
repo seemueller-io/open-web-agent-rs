@@ -173,4 +173,4 @@
 })();
 
 console.log("\nAll test requests have been sent. Check the server logs for more details.");
-console.log("To run the server, use: cargo run --bin local_inference_engine -- --server");
+console.log("To run the server, use: cargo run --bin inference-engine -- --server");

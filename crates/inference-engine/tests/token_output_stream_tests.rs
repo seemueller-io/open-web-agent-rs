@@ -1,4 +1,4 @@
-use local_inference_engine::token_output_stream::TokenOutputStream;
+use inference_engine::token_output_stream::TokenOutputStream;
 use tokenizers::Tokenizer;
 use std::path::PathBuf;
 use anyhow::Result;

@@ -2352,6 +2352,57 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f4c7245a08504955605670dbf141fceab975f15ca21570696aebe9d2e71576bd"
 
 [[package]]
+name = "inference-engine"
+version = "0.1.0"
+dependencies = [
+ "ab_glyph",
+ "accelerate-src",
+ "anyhow",
+ "axum 0.7.9",
+ "bindgen_cuda",
+ "byteorder",
+ "candle-core",
+ "candle-datasets",
+ "candle-flash-attn",
+ "candle-nn",
+ "candle-onnx",
+ "candle-transformers",
+ "clap",
+ "cpal",
+ "csv",
+ "cudarc",
+ "either",
+ "enterpolation",
+ "half",
+ "hf-hub",
+ "image",
+ "imageproc",
+ "intel-mkl-src",
+ "memmap2",
+ "num-traits",
+ "palette",
+ "pdf2image",
+ "pyo3",
+ "rand 0.9.1",
+ "rayon",
+ "reborrow",
+ "rubato",
+ "safetensors",
+ "serde",
+ "serde_json",
+ "symphonia",
+ "tokenizers",
+ "tokio",
+ "tower 0.4.13",
+ "tower-http 0.5.2",
+ "tracing",
+ "tracing-chrome",
+ "tracing-subscriber",
+ "utoipa",
+ "uuid",
+]
+
+[[package]]
 name = "instant"
 version = "0.1.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2619,57 +2670,6 @@ name = "litemap"
 version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "241eaef5fd12c88705a01fc1066c48c4b36e0dd4377dcdc7ec3942cea7a69956"
-
-[[package]]
-name = "local_inference_engine"
-version = "0.1.0"
-dependencies = [
- "ab_glyph",
- "accelerate-src",
- "anyhow",
- "axum 0.7.9",
- "bindgen_cuda",
- "byteorder",
- "candle-core",
- "candle-datasets",
- "candle-flash-attn",
- "candle-nn",
- "candle-onnx",
- "candle-transformers",
- "clap",
- "cpal",
- "csv",
- "cudarc",
- "either",
- "enterpolation",
- "half",
- "hf-hub",
- "image",
- "imageproc",
- "intel-mkl-src",
- "memmap2",
- "num-traits",
- "palette",
- "pdf2image",
- "pyo3",
- "rand 0.9.1",
- "rayon",
- "reborrow",
- "rubato",
- "safetensors",
- "serde",
- "serde_json",
- "symphonia",
- "tokenizers",
- "tokio",
- "tower 0.4.13",
- "tower-http 0.5.2",
- "tracing",
- "tracing-chrome",
- "tracing-subscriber",
- "utoipa",
- "uuid",
-]
 
 [[package]]
 name = "lock_api"

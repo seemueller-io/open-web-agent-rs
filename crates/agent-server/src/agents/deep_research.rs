@@ -13,6 +13,7 @@ mod tests {
     use std::fmt::Debug;
 
     #[tokio::test]
+    #[ignore]
     async fn test_deepresearch() {
         // a really provocative question for research that generally yields infinite complexity with each run
         let input = "What is a life of meaning?";

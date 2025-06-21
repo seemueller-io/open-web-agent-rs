@@ -1,5 +1,5 @@
 [package]
-name = "local_inference_engine"
+name = "inference-engine"
 version = "0.1.0"
 edition = "2021"
 

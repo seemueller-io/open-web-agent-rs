@@ -246,7 +246,7 @@ async fn chat_completions(
         StatusCode::BAD_REQUEST,
         Json(serde_json::json!({
             "error": {
-                "message": "The OpenAI API is currently not supported due to compatibility issues with the tensor operations. Please use the CLI mode instead with: cargo run --bin local_inference_engine -- --prompt \"Your prompt here\"",
+                "message": "The OpenAI API is currently not supported due to compatibility issues with the tensor operations. Please use the CLI mode instead with: cargo run --bin inference-engine -- --prompt \"Your prompt here\"",
                 "type": "unsupported_api"
             }
         })),
@@ -292,6 +292,7 @@ use candle_core::{DType, Device, MetalDevice, Tensor};
 use candle_nn::VarBuilder;
 use candle_transformers::generation::LogitsProcessor;
 use hf_hub::{Repo, RepoType, api::sync::Api};
+use serde_json::json;
 use tokenizers::Tokenizer;
 use crate::token_output_stream::TokenOutputStream;
 use crate::utilities_lib::device;
@@ -596,7 +597,7 @@ impl TextGeneration {
                 logits
             } else {
                 let start_at = tokens.len().saturating_sub(self.repeat_last_n);
-
+ 
                 // Manual implementation of repeat penalty to avoid type conflicts
                 let mut logits_vec = logits.to_vec1::<f32>()?;
 

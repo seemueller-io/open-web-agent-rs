@@ -67,7 +67,7 @@ pub async fn chat_completions(
                 StatusCode::BAD_REQUEST,
                 Json(serde_json::json!({
                     "error": {
-                        "message": "The OpenAI API is currently not supported due to compatibility issues with the tensor operations. Please use the CLI mode instead with: cargo run --bin local_inference_engine -- --prompt \"Your prompt here\"",
+                        "message": "The OpenAI API is currently not supported due to compatibility issues with the tensor operations. Please use the CLI mode instead with: cargo run --bin inference-engine -- --prompt \"Your prompt here\"",
                         "type": "unsupported_api"
                     }
                 })),

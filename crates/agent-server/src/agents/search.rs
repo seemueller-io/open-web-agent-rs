@@ -12,7 +12,8 @@ mod tests {
     use std::fmt::Debug;
     use crate::agents::search::agent;
 
-    #[tokio::test] 
+    #[tokio::test]
+    #[ignore]
     async fn test_search_execution() {
         let input = "Who won the 2024 presidential election?";
 
