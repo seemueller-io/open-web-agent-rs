@@ -1,4 +1,6 @@
 # open-web-agent-rs
+[![Rust](https://github.com/seemueller-io/open-web-agent-rs/actions/workflows/main.yml/badge.svg)](https://github.com/seemueller-io/open-web-agent-rs/actions/workflows/main.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 A Rust-based web agent with an embedded OpenAI-compatible inference server (supports Gemma models only). It is packaged and deployed as a container.
 
