@@ -6,8 +6,8 @@ edition = "2021"
 [dependencies]
 accelerate-src = { version = "0.3.2", optional = true }
 candle-datasets = { version = "=0.9.1", optional = true }
-candle-nn = { version = "=0.9.1", features = ["metal"] }
-candle-transformers = { version = "=0.9.1", features = ["metal"] }
+candle-nn = { version = "=0.9.1" }
+candle-transformers = { version = "=0.9.1" }
 candle-flash-attn = { version = "=0.9.1", optional = true }
 candle-onnx = { version = "=0.9.1", optional = true }
 
@@ -21,16 +21,15 @@ num-traits = { version = "0.2.15" }
 palette = { version = "0.7.6", optional = true }
 enterpolation = { version = "0.2.1", optional = true}
 pyo3 = { version = "0.22.0", features = ["auto-initialize", "abi3-py311"], optional = true }
-rayon = { version = "1.7.0" }
+rayon = "1.7.0"
 rubato = { version = "0.15.0", optional = true }
-safetensors = { version = "0.4.1" }
+safetensors = "0.4.1"
 serde = { version = "1.0.171", features = ["derive"] }
-serde_json = { version = "1.0.99" }
+serde_json = "1.0.99"
 symphonia = { version = "0.5.3", features = ["all"], optional = true }
 tokenizers = { version = "0.21.0", default-features = false, features = ["onig", "http"] }
 cpal = { version = "0.15.2", optional = true }
 pdf2image = { version = "0.1.2" , optional = true}
-candle-core = { version = "=0.9.1", features = ["metal"] }
 anyhow = "1.0.98"
 clap= { version = "4.2.4", features = ["derive"] }
 tracing = "0.1.37"
@@ -45,6 +44,18 @@ utoipa = { version = "4.2.0", features = ["axum_extras"] }
 uuid = { version = "1.7.0", features = ["v4"] }
 reborrow = "0.5.5"
 
+# --- Add this section for conditional compilation ---
+[target.'cfg(target_os = "macos")'.dependencies]
+candle-core = { version = "=0.9.1", features = ["metal"] }
+
+[target.'cfg(not(target_os = "macos"))'.dependencies]
+# For Linux or other non-macOS systems, you likely want the CPU backend or CUDA
+# If you're building on Linux with a CUDA-enabled GPU:
+candle-core = { version = "=0.9.1", features = ["cuda"], default-features = false } # Or just "cuda" if not using default features
+
+# If you're building on Linux with only CPU:
+# candle-core = { version = "=0.9.1", default-features = false } # CPU is often the default, but good to be explicit
+# --- End of conditional compilation section ---
 
 [dev-dependencies]
 anyhow = { version = "1", features = ["backtrace"] }
